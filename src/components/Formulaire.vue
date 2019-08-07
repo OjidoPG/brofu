@@ -87,7 +87,7 @@
         <v-btn
                 color="success"
                 class="md-3 offset-md-1 mt-5"
-                @click="validate"
+                @click="validation"
         >
             Validation
         </v-btn>
@@ -140,10 +140,9 @@
             ]
         }),
         methods: {
-            validate() {
-                if (this.$refs.form.validate()) {
-                    this.snackbar = true
-                }
+            validation() {
+                alert('faire appel api')
+
             },
             reset() {
                 this.$refs.form.reset()
