@@ -30,7 +30,7 @@
         ></v-text-field>
 
         <v-text-field
-                v-model="email"
+                v-model="mail"
                 :rules="emailRules"
                 label="E-mail"
                 required
@@ -135,7 +135,7 @@
                     nom: '',
                     prenom: '',
                     telephone: '',
-                    email: '',
+                    mail: '',
                     adresse: '',
                     codepostal: '',
                     ville: '',
@@ -151,7 +151,7 @@
                 formData.append("nom", this.form.nom);
                 formData.append("prenom", this.form.prenom);
                 formData.append("telephone", this.form.telephone);
-                formData.append("email", this.form.email);
+                formData.append("mail", this.form.mail);
                 formData.append("adresse", this.form.adresse);
                 formData.append("codepostal", this.form.codepostal);
                 formData.append("ville", this.form.ville);
