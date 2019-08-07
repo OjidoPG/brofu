@@ -4,7 +4,7 @@
             <v-app-bar
                     color="light-blue darken-3"
                     dark
-                    height="130"
+                    height="100"
             >
                 <div class="col-md-10 offset-md-1 text-center font-weight-bold">
                     <v-toolbar-title class="title">BROCANTE D'EULMONT</v-toolbar-title>
