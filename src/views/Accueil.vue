@@ -1,26 +1,37 @@
 <template>
-    <div id="Accueil">
-
+    <v-app id="inspire">
         <!-- Header Brocante -->
         <BrocanteHeaderLayout></BrocanteHeaderLayout>
 
-        <!-- insertion de la card bootstrap -->
-        <h1>Corps de l'accueil</h1>
+        <!-- Corps de l'Accueil -->
+        <v-content class="carousel">
+            <Carousel></Carousel>
+        </v-content>
 
-        <!-- Footer Accueil -->
-        <BrocanteFooterLayout></BrocanteFooterLayout>
-
-    </div>
+        <!-- Footer  -->
+        <v-footer>
+            <BrocanteFooterLayout></BrocanteFooterLayout>
+        </v-footer>
+    </v-app>
 </template>
 
 <script>
     import BrocanteHeaderLayout from '@/layouts/BrocanteHeaderLayout.vue';
     import BrocanteFooterLayout from '@/layouts/BrocanteFooterLayout.vue';
+    import Carousel from '@/components/Carousel.vue';
+
     export default {
         name: "Accueil",
-        components : {
+        components: {
             BrocanteHeaderLayout,
-            BrocanteFooterLayout
+            BrocanteFooterLayout,
+            Carousel
         }
     };
 </script>
+
+<style>
+    .carousel{
+        margin-top: 70px;
+    }
+</style>

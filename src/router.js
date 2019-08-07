@@ -11,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'Accueil',
       component: ()=>import(/* webpackChunkName: "about" */ './views/Accueil.vue')
+    },
+    {
+      path: '/Inscription',
+      name: 'Inscription',
+      component: ()=>import(/* webpackChunkName: "about" */ './views/Inscription.vue')
     }
   ]
 })
