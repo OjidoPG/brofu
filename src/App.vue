@@ -1,14 +1,23 @@
 <template>
   <div id="app">
-    <router-view/>
+    <component
+      :is="layout"
+    >
+      <router-view/>
+    </component>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue'
+  import AccueilLayout from './layouts/AccueilLayout'
+
+  Vue.component('AccueilLayout', AccueilLayout)
+
   export default  {
     computed: {
       layout() {
-        return '@/layouts/' + (this.$router)
+        return this.$route.meta.layout
       }
     }
   }

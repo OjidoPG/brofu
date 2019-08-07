@@ -1,37 +1,43 @@
 <template>
-    <v-app id="inspire">
-        <!-- Header Brocante -->
-        <BrocanteHeaderLayout></BrocanteHeaderLayout>
-
+    <div>
         <!-- Corps de l'Accueil -->
-        <v-content class="carousel">
+<v-container grid-list-md text-center>
+    <v-layout wrap>
+        <v-flex md-4 offset-4>
             <Carousel></Carousel>
-        </v-content>
+        </v-flex>
+    </v-layout>
 
-        <!-- Footer  -->
-        <v-footer>
-            <BrocanteFooterLayout></BrocanteFooterLayout>
-        </v-footer>
-    </v-app>
+
+</v-container>
+
+
+
+
+
+
+    </div>
 </template>
 
 <script>
-    import BrocanteHeaderLayout from '@/layouts/BrocanteHeaderLayout';
-    import BrocanteFooterLayout from '@/layouts/BrocanteFooterLayout';
+    // import AccueilLayout from '@/layouts/AccueilLayout'
+    // import BrocanteHeaderLayout from '@/layouts/BrocanteHeaderLayout';
+    // import BrocanteFooterLayout from '@/layouts/BrocanteFooterLayout';
     import Carousel from '@/components/Carousel';
 
     export default {
         name: "Accueil",
         components: {
-            BrocanteHeaderLayout,
-            BrocanteFooterLayout,
+            // AccueilLayout
+            // BrocanteHeaderLayout,
+            // BrocanteFooterLayout,
             Carousel
         }
     };
 </script>
 
 <style>
-    .carousel{
+    .carousel {
         margin-top: 70px;
     }
 </style>

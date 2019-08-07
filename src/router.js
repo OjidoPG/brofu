@@ -10,6 +10,9 @@ export default new Router({
     {
       path: '/',
       name: 'Accueil',
+      meta:{
+        layout:'accueil-layout'
+      },
       component: ()=>import(/* webpackChunkName: "about" */ './views/Accueil.vue')
     },
     {
