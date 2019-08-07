@@ -16,9 +16,9 @@
 </template>
 
 <script>
-    import BrocanteHeaderLayout from '@/layouts/BrocanteHeaderLayout.vue';
-    import BrocanteFooterLayout from '@/layouts/BrocanteFooterLayout.vue';
-    import Carousel from '@/components/Carousel.vue';
+    import BrocanteHeaderLayout from '@/layouts/BrocanteHeaderLayout';
+    import BrocanteFooterLayout from '@/layouts/BrocanteFooterLayout';
+    import Carousel from '@/components/Carousel';
 
     export default {
         name: "Accueil",
