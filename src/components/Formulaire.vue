@@ -104,7 +104,8 @@
             nameRules: [
                 v => !!v || 'Le nom est requis',
                 v => (v && v.length >= 3) || 'Doit faire plus de 3 caractères',
-                v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères '
+                v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères',
+                v => /^[A-Zazéèê-]+$/.test(v) || 'Le nom doit être valide',
             ],
             email: '',
             telephone: '',
