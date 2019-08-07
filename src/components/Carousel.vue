@@ -15,6 +15,7 @@
 
 <script>
     export default {
+        name:"Carousel.vue",
         data() {
             return {
                 images: [

@@ -18,6 +18,9 @@ export default new Router({
     {
       path: '/Inscription',
       name: 'Inscription',
+      meta:{
+        layout:'inscription-layout'
+      },
       component: ()=>import(/* webpackChunkName: "about" */ './views/Inscription.vue')
     }
   ]

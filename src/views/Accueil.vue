@@ -2,7 +2,7 @@
     <div>
         <v-container grid-list-md text-center class="carousel">
             <v-layout wrap>
-                <v-flex md4 offset-md4>
+                <v-flex md6 offset-md3>
                     <Carousel></Carousel>
                 </v-flex>
             </v-layout>
@@ -23,6 +23,6 @@
 
 <style>
     .carousel {
-        margin-top: 150px;
+        margin-top: 80px;
     }
 </style>

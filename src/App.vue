@@ -11,8 +11,10 @@
 <script>
   import Vue from 'vue'
   import AccueilLayout from './layouts/AccueilLayout'
+  import InscriptionLayout from './layouts/InscriptionLayout'
 
   Vue.component('AccueilLayout', AccueilLayout)
+  Vue.component('InscriptionLayout', InscriptionLayout)
 
   export default  {
     computed: {
