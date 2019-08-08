@@ -4,7 +4,9 @@
             v-model="valid"
             lazy-validation
     >
-
+        <error-alert
+        :error=false
+        ></error-alert>
         <v-text-field
                 v-model="form.nom"
                 :counter="15"
@@ -91,12 +93,21 @@
         >
             Validation
         </v-btn>
+        <success-alert
+        :success=false
+        ></success-alert>
     </v-form>
 </template>
 
 <script>
-    // noinspection JSUnusedGlobalSymbols
+    import SuccessAlert from '@/components/alerte/SuccessAlert'
+    import ErrorAlert from '@/components/alerte/ErrorAlert'
+
     export default {
+        components: {
+            SuccessAlert,
+            ErrorAlert
+        },
         data: () => ({
                 valid: true,
                 nameRules: [
@@ -142,11 +153,16 @@
                     emplacements_id: ''
                 },
                 emplacements: [],
-                messages: []
+                messages: [],
+                success:false,
+                error:false
             }
         ),
         methods: {
             validation() {
+                this.success=false;
+                this.success=true;
+
                 let formData = new FormData();
                 formData.append("nom", this.form.nom);
                 formData.append("prenom", this.form.prenom);

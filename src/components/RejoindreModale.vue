@@ -23,7 +23,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-flex>
-                        <v-btn small color="error" @click="closeModale">Fermer</v-btn>
+                        <v-btn small color="success" @click="closeModale">Fermer</v-btn>
                     </v-flex>
                 </v-card-actions>
             </v-card>
