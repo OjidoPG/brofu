@@ -1,8 +1,8 @@
 <template>
     <v-app-bar
-        color="light-blue darken-3"
-        dark
-        height="100"
+            color="light-blue darken-3"
+            dark
+            height="100"
     >
         <div class="col-md-10 offset-md-1 text-center font-weight-bold">
             <v-toolbar-title class="title">BROCANTE D'EULMONT</v-toolbar-title>
@@ -15,7 +15,7 @@
                     </v-btn>
                 </template>
 
-                <v-list>
+                <v-list dense rounded>
                     <v-list-item
                             v-for="option in options"
                             :key="option.message"
@@ -26,12 +26,21 @@
                 </v-list>
             </v-menu>
         </div>
+
+        <AdministrateurModale
+                :dialog=dialog
+        ></AdministrateurModale>
+
     </v-app-bar>
 </template>
 
 <script>
-    // noinspection JSUnusedGlobalSymbols
+    import AdministrateurModale from '@/components/AdministrateursModale'
+
     export default {
+        components: {
+            AdministrateurModale
+        },
         data() {
             return {
                 options: [
@@ -39,6 +48,7 @@
                     {message: 'Administrateurs'}
                 ],
                 sheet: false,
+                dialog: false
             }
         },
         methods: {
@@ -48,7 +58,8 @@
                         alert('Nous rejoindre');
                         break;
                     case'Administrateurs':
-                        alert('Administrateurs');
+                        this.dialog = false;
+                        this.dialog = true;
                         break;
                     default:
                         alert('Default');
