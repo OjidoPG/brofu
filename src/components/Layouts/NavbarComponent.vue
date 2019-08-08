@@ -18,8 +18,8 @@
                 <v-list dense rounded>
                     <v-list-item
                             v-for="option in options"
-                            :key="option.message"
-                            @click="aiguillage(option.message)"
+                            :key="option.id"
+                            @click="aiguillage(option.id)"
                     >
                         <v-list-item-title>{{ option.message }}</v-list-item-title>
                     </v-list-item>
@@ -27,38 +27,46 @@
             </v-menu>
         </div>
 
-        <AdministrateurModale
+        <administrateur-modale
                 :dialog=dialog
-        ></AdministrateurModale>
+        ></administrateur-modale>
+
+        <rejoindre-modale
+                :dialogMap=dialogMap
+        ></rejoindre-modale>
 
     </v-app-bar>
 </template>
 
 <script>
     import AdministrateurModale from '@/components/AdministrateursModale'
+    import RejoindreModale from '@/components/RejoindreModale'
 
     export default {
         components: {
-            AdministrateurModale
+            AdministrateurModale,
+            RejoindreModale
         },
         data() {
             return {
                 options: [
-                    {message: 'Nous rejoindre'},
-                    {message: 'Administrateurs'}
+                    {id: 1, message: 'Nous rejoindre'},
+                    {id: 2, message: 'Administrateurs'}
                 ],
                 sheet: false,
-                dialog: false
+                dialog: false,
+                dialogMap: false
             }
         },
         methods: {
             aiguillage(data) {
+                this.dialogMap = false;
+                this.dialog = false;
                 switch (data) {
-                    case 'Nous rejoindre' :
-                        alert('Nous rejoindre');
+                    case 1 :
+                        this.dialogMap = true;
                         break;
-                    case'Administrateurs':
-                        this.dialog = false;
+                    case 2 :
                         this.dialog = true;
                         break;
                     default:
