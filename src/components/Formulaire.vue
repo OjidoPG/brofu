@@ -6,7 +6,7 @@
     >
 
         <v-text-field
-                v-model="nom"
+                v-model="form.nom"
                 :counter="15"
                 :rules="nameRules"
                 label="Nom"
@@ -14,7 +14,7 @@
         ></v-text-field>
 
         <v-text-field
-                v-model="prenom"
+                v-model="form.prenom"
                 :counter="15"
                 :rules="nameRules"
                 label="Prenom"
@@ -22,7 +22,7 @@
         ></v-text-field>
 
         <v-text-field
-                v-model="telephone"
+                v-model="form.telephone"
                 :counter="10"
                 :rules="telephoneRules"
                 label="Telephone"
@@ -30,14 +30,14 @@
         ></v-text-field>
 
         <v-text-field
-                v-model="mail"
+                v-model="form.mail"
                 :rules="emailRules"
                 label="E-mail"
                 required
         ></v-text-field>
 
         <v-text-field
-                v-model="adresse"
+                v-model="form.adresse"
                 :counter="30"
                 :rules="adresseRules"
                 label="Adresse"
@@ -45,7 +45,7 @@
         ></v-text-field>
 
         <v-text-field
-                v-model="codepostal"
+                v-model="form.codepostal"
                 :counter="5"
                 :rules="cpRules"
                 label="Code Postal"
@@ -53,7 +53,7 @@
         ></v-text-field>
 
         <v-text-field
-                v-model="ville"
+                v-model="form.ville"
                 :counter="15"
                 :rules="nameRules"
                 label="Ville"
@@ -61,7 +61,7 @@
         ></v-text-field>
 
         <v-select
-                v-model="emplacements_id"
+                v-model="form.emplacements_id"
                 :items="emplacements"
                 :rules="[v => !!v || 'Veuillez choisir un emplacement']"
                 label="Emplacements disponibles"
@@ -95,8 +95,8 @@
 </template>
 
 <script>
+    // noinspection JSUnusedGlobalSymbols
     export default {
-        name: "Formulaire.vue",
         data: () => ({
                 valid: true,
                 nameRules: [
@@ -176,7 +176,7 @@
                             this.emplacements.push(
                                 "Emplacement numéro : " + response.data[i]['numero'] +
                                 " - taille : " + response.data[i]['taille'] +
-                                " - prix : " + response.data[i]['prix']+" euros");
+                                " - prix : " + response.data[i]['prix'] + " euros");
                         }
                     })
             }

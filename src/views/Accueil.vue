@@ -1,18 +1,15 @@
 <template>
-    <div>
-        <v-container grid-list-md text-center class="carousel">
-            <v-layout wrap>
-                <v-flex md6 offset-md3>
-                    <Carousel></Carousel>
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </div>
+    <v-layout align-center justify-center row fill-height>
+        <v-flex md6>
+            <Carousel></Carousel>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>
-    import Carousel from '@/components/Carousel';
+    import Carousel from '../components/Carousel';
 
+    // noinspection JSUnusedGlobalSymbols
     export default {
         name: "Accueil",
         components: {
@@ -20,9 +17,3 @@
         }
     };
 </script>
-
-<style>
-    .carousel {
-        margin-top: 80px;
-    }
-</style>

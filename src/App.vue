@@ -1,20 +1,20 @@
 <template>
-  <div id="app">
+  <v-app id="inspire">
     <component
       :is="layout"
     >
       <router-view/>
     </component>
-  </div>
+  </v-app>
 </template>
 
 <script>
   import Vue from 'vue'
-  import AccueilLayout from './layouts/AccueilLayout'
-  import InscriptionLayout from './layouts/InscriptionLayout'
+  import WithoutFooterLayout from './layouts/WithoutFooterLayout'
+  import FullLayout from './layouts/FullLayout'
 
-  Vue.component('AccueilLayout', AccueilLayout)
-  Vue.component('InscriptionLayout', InscriptionLayout)
+  Vue.component('WithoutFooterLayout', WithoutFooterLayout)
+  Vue.component('FullLayout', FullLayout)
 
   export default  {
     computed: {
