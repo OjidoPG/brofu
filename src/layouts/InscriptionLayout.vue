@@ -34,12 +34,18 @@
         <v-content>
             <slot></slot>
         </v-content>
+
+        <AdministrateursModale></AdministrateursModale>
+
     </v-app>
 </template>
 
 <script>
+    import AdministrateursModale from '@/components/AdministrateursModale'
+
     export default {
         name: "AccueilLayout",
+        components:AdministrateursModale,
         data() {
             return {
                 options: [
