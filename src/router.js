@@ -11,7 +11,7 @@ export default new Router({
       path: '/',
       name: 'Accueil',
       meta:{
-        layout:'full-layout'
+        layout:'accueil-layout'
       },
       component: ()=>import(/* webpackChunkName: "about" */ './views/Accueil.vue')
     },
@@ -19,7 +19,7 @@ export default new Router({
       path: '/Inscription',
       name: 'Inscription',
       meta:{
-        layout:'without-footer-layout'
+        layout:'inscription-layout'
       },
       component: ()=>import(/* webpackChunkName: "about" */ './views/Inscription.vue')
     }

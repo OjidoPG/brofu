@@ -10,11 +10,11 @@
 
 <script>
   import Vue from 'vue'
-  import WithoutFooterLayout from './layouts/WithoutFooterLayout'
-  import FullLayout from './layouts/FullLayout'
+  import InscriptionLayout from './layouts/InscriptionLayout'
+  import AccueilLayout from './layouts/AccueilLayout'
 
-  Vue.component('WithoutFooterLayout', WithoutFooterLayout)
-  Vue.component('FullLayout', FullLayout)
+  Vue.component('InscriptionLayout', InscriptionLayout)
+  Vue.component('AccueilLayout', AccueilLayout)
 
   export default  {
     computed: {

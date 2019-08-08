@@ -1,20 +1,20 @@
 <template>
     <section id="without-footer-layout">
-        <navbar/>
+        <navbar-component/>
         <v-container fluid
-                     fill-height>
+                     >
             <slot/>
         </v-container>
     </section>
 </template>
 
 <script>
-    import Navbar from '@/components/Layouts/Navbar'
+    import NavbarComponent from '@/components/Layouts/NavbarComponent'
 
     // noinspection JSUnusedGlobalSymbols
     export default {
         components: {
-            Navbar
+            NavbarComponent
         }
     }
 </script>

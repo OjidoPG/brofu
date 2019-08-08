@@ -17,8 +17,8 @@
 </template>
 
 <script>
-    import NavbarComponent from '@/components/Layouts/Navbar'
-    import FooterComponent from '@/components/Layouts/Footer'
+    import NavbarComponent from '@/components/Layouts/NavbarComponent'
+    import FooterComponent from '@/components/Layouts/FooterComponent'
 
     // noinspection JSUnusedGlobalSymbols
     export default {
