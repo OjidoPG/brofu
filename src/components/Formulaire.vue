@@ -5,7 +5,7 @@
             lazy-validation
     >
         <error-alert
-        :error=false
+                :error=false
         ></error-alert>
         <v-text-field
                 v-model="form.nom"
@@ -65,6 +65,8 @@
         <v-select
                 v-model="form.emplacements_id"
                 :items="emplacements"
+                item-text="texte"
+                item-value="valeur"
                 :rules="[v => !!v || 'Veuillez choisir un emplacement']"
                 label="Emplacements disponibles"
                 required
@@ -94,7 +96,7 @@
             Validation
         </v-btn>
         <success-alert
-        :success=false
+                :success=false
         ></success-alert>
     </v-form>
 </template>
@@ -114,7 +116,7 @@
                     v => !!v || 'Le nom est requis',
                     v => (v && v.length >= 3) || 'Doit faire plus de 3 caractères',
                     v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères',
-                    v => /^[A-Zazéèê-]+$/.test(v) || 'Le nom doit être valide',
+                    v => /^([a-z]+(( |')[a-z]+)*)+([-]([a-z]+(( |')[a-z]+)*)+)*$/.test(v) || 'Le nom doit être valide',
                 ],
                 telephoneRules: [
                     v => !!v || 'Le téléphone est requis',
@@ -154,15 +156,12 @@
                 },
                 emplacements: [],
                 messages: [],
-                success:false,
-                error:false
+                success: false,
+                error: false
             }
         ),
         methods: {
             validation() {
-                this.success=false;
-                this.success=true;
-
                 let formData = new FormData();
                 formData.append("nom", this.form.nom);
                 formData.append("prenom", this.form.prenom);
@@ -177,6 +176,7 @@
                     .then(response => {
                         this.messages = response.data;
                     })
+
             },
             reset() {
                 this.$refs.form.reset()
@@ -188,12 +188,14 @@
                 this.emplacements = [];
                 this.$http.get('api/getEmplacements')
                     .then(response => {
-                        for (let i = 0; i < response.data.length; i++) {
-                            this.emplacements.push(
-                                "Emplacement numéro : " + response.data[i]['numero'] +
-                                " - taille : " + response.data[i]['taille'] +
-                                " - prix : " + response.data[i]['prix'] + " euros");
-                        }
+                        response.data.liste.forEach(item => {
+                            this.emplacements.push({
+                                valeur: item.id,
+                                texte: "Emplacement numéro : " + item.numero +
+                                    " - taille : " + item.taille +
+                                    " - prix : " + item.prix + " euros"
+                            })
+                        })
                     })
             }
         },
