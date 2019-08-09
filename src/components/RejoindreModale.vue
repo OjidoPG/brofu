@@ -1,6 +1,6 @@
 <template>
     <v-layout justify-center>
-        <v-dialog v-model="dialogMap" persistent width="732">
+        <v-dialog :value="value"  @input="$emit('input', $event.target.value)" persistent width="732">
             <v-card>
                 <v-card-title>
                     <span class="headline">Rejoignez-nous</span>
@@ -35,14 +35,14 @@
     export default {
         name: "Rejoindre.vue",
         props: {
-            dialogMap: {
+            value: {
                 type: Boolean,
                 default: false
             }
         },
         methods: {
             closeModale() {
-                this.dialogMap = false;
+                this.$emit('input', false);
             }
         }
     }

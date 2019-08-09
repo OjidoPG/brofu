@@ -28,11 +28,11 @@
         </div>
 
         <administrateur-modale
-                :dialog=dialog
+                v-model="dialog"
         ></administrateur-modale>
 
         <rejoindre-modale
-                :dialogMap=dialogMap
+                v-model="dialogMap"
         ></rejoindre-modale>
 
     </v-app-bar>
@@ -60,8 +60,6 @@
         },
         methods: {
             aiguillage(data) {
-                this.dialogMap = false;
-                this.dialog = false;
                 switch (data) {
                     case 1 :
                         this.dialogMap = true;

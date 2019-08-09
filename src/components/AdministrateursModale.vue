@@ -1,6 +1,6 @@
 <template>
     <v-layout justify-center>
-        <v-dialog v-model="dialog" persistent max-width="300px">
+        <v-dialog :value="value"  @input="$emit('input', $event.target.value)" persistent max-width="300px">
             <v-card>
                 <v-card-title>
                     <span class="headline">Administrateurs</span>
@@ -35,14 +35,14 @@
     export default {
         name: "AdministrateursModale.vue",
         props:{
-            dialog: {
+            value: {
                 type:Boolean,
                 default:false
             }
         },
         methods : {
             closeModale(){
-                this.dialog = false;
+                this.$emit('input', false);
             },
             saveAdmin(){
                 alert('save')
