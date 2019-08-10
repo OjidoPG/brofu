@@ -4,9 +4,6 @@
             v-model="valid"
             lazy-validation
     >
-        <error-alert
-                :error=false
-        ></error-alert>
         <v-text-field
                 v-model="form.nom"
                 :counter="15"
@@ -89,34 +86,26 @@
         </v-btn>
 
         <v-btn
+                :disabled="!valid"
                 color="success"
                 class="md-3 offset-md-1 mt-5"
                 @click="validation"
         >
             Validation
         </v-btn>
-        <success-alert
-                :success=false
-        ></success-alert>
     </v-form>
 </template>
 
 <script>
-    import SuccessAlert from '@/components/alerte/SuccessAlert'
-    import ErrorAlert from '@/components/alerte/ErrorAlert'
-
     export default {
-        components: {
-            SuccessAlert,
-            ErrorAlert
-        },
+        components: {},
         data: () => ({
                 valid: true,
                 nameRules: [
                     v => !!v || 'Le nom est requis',
                     v => (v && v.length >= 3) || 'Doit faire plus de 3 caractères',
                     v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères',
-                    v => /^([a-z]+(( |')[a-z]+)*)+([-]([a-z]+(( |')[a-z]+)*)+)*$/.test(v) || 'Le nom doit être valide',
+                    v => /^[a-zA-Zéèâùï -]+$/.test(v) || 'Le nom doit être valide',
                 ],
                 telephoneRules: [
                     v => !!v || 'Le téléphone est requis',
@@ -162,28 +151,33 @@
         ),
         methods: {
             validation() {
-                let formData = new FormData();
-                formData.append("nom", this.form.nom);
-                formData.append("prenom", this.form.prenom);
-                formData.append("telephone", this.form.telephone);
-                formData.append("mail", this.form.mail);
-                formData.append("adresse", this.form.adresse);
-                formData.append("codepostal", this.form.codepostal);
-                formData.append("ville", this.form.ville);
-                formData.append("emplacements_id", this.form.emplacements_id);
+                if (this.$refs.form.validate()) {
+                    let formData = new FormData();
+                    formData.append("nom", this.form.nom);
+                    formData.append("prenom", this.form.prenom);
+                    formData.append("telephone", this.form.telephone);
+                    formData.append("mail", this.form.mail);
+                    formData.append("adresse", this.form.adresse);
+                    formData.append("codepostal", this.form.codepostal);
+                    formData.append("ville", this.form.ville);
+                    formData.append("emplacements_id", this.form.emplacements_id);
 
-                this.$http.post('api/postClients', formData)
-                    .then(response => {
-                        this.messages = response.data;
-                    })
-
-            },
+                    this.$http.post('api/postClients', formData)
+                        .then(response => {
+                            alert(response.data)
+                            this.messages = response.data;
+                        })
+                }
+            }
+            ,
             reset() {
                 this.$refs.form.reset()
-            },
+            }
+            ,
             annulation() {
                 this.$router.push('/');
-            },
+            }
+            ,
             appelEmplacements() {
                 this.emplacements = [];
                 this.$http.get('api/getEmplacements')
