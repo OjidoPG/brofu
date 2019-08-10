@@ -21,7 +21,8 @@
                             :key="option.id"
                             @click="aiguillage(option.id)"
                     >
-                        <v-list-item-title>{{ option.message }}</v-list-item-title>
+                        <v-list-item-title v-if="option.id == 1"><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;{{ option.message }}</v-list-item-title>
+                        <v-list-item-title v-if="option.id == 2"><i class="fas fa-user-lock"></i>&nbsp;&nbsp;{{ option.message }}</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>

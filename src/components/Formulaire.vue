@@ -74,7 +74,7 @@
                 class="md-3 mt-5"
                 @click="annulation"
         >
-            Annulation
+            ACCUEIL
         </v-btn>
 
         <v-btn
@@ -82,7 +82,7 @@
                 class="md-3 offset-md-1 mt-5"
                 @click="reset"
         >
-            Reinitialise
+            RECOMMENCER
         </v-btn>
 
         <v-btn
@@ -91,7 +91,7 @@
                 class="md-3 offset-md-1 mt-5"
                 @click="validation"
         >
-            Validation
+            VALIDATION
         </v-btn>
 
         <v-snackbar
@@ -100,7 +100,7 @@
                 :color="color"
         >
             {{ textsnackbartest }}
-            <i class="fas fa-ban"></i>
+            <i :class="icon"></i>
         </v-snackbar>
 
     </v-form>
@@ -159,6 +159,7 @@
                 error: false,
                 snackbarTest: false,
                 textsnackbartest: '',
+                icon:'',
                 color: '',
                 timeout: 4000
             }
@@ -178,14 +179,14 @@
 
                     this.$http.post('api/postClients', formData)
                         .then(response => {
-                            this.messages = response.data;
                             if (response.data['erreurs']) {
                                 if (response.data['erreurs'][0]['Type'] === "Uniqueness") {
                                     this.uniqueness()
+                                }else{
+                                    this.jserror()
                                 }
-
-                            } else {
-                                alert('success')
+                            }else{
+                                this.reussite();
                             }
                         })
                 }
@@ -215,13 +216,24 @@
             },
             uniqueness() {
                 this.textsnackbartest = "Vous êtes déjà enregistré";
+                this.icon="fas fa-ban"
                 this.color = "error";
                 this.snackbarTest = true;
+                this.reset()
             },
-            formok() {
+            reussite() {
                 this.textsnackbartest = "Vous êtes enregistré";
+                this.icon="fas fa-check-circle"
                 this.color = "success";
                 this.snackbarTest = true;
+                this.reset()
+            },
+            jserror(){
+                this.textsnackbartest = "Erreur JavaScript, contactez les administrateurs";
+                this.icon="fas fa-user-ninja"
+                this.color = "warning";
+                this.snackbarTest = true;
+                this.reset()
             }
         },
         created() {
