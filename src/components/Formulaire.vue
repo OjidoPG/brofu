@@ -93,6 +93,16 @@
         >
             Validation
         </v-btn>
+
+        <v-snackbar
+                v-model="snackbarTest"
+                :timeout="timeout"
+                :color="color"
+        >
+            {{ textsnackbartest }}
+            <i class="fas fa-ban"></i>
+        </v-snackbar>
+
     </v-form>
 </template>
 
@@ -134,19 +144,23 @@
                     'Item 4',
                 ],
                 form: {
-                    nom: '',
-                    prenom: '',
-                    telephone: '',
-                    mail: '',
-                    adresse: '',
-                    codepostal: '',
-                    ville: '',
+                    nom: 'toto',
+                    prenom: 'toto',
+                    telephone: '0123456789',
+                    mail: 'kk@kk.kk',
+                    adresse: 'kkkkkkkkkk',
+                    codepostal: '54000',
+                    ville: 'nancy',
                     emplacements_id: ''
                 },
                 emplacements: [],
                 messages: [],
                 success: false,
-                error: false
+                error: false,
+                snackbarTest: false,
+                textsnackbartest: '',
+                color: '',
+                timeout: 4000
             }
         ),
         methods: {
@@ -164,8 +178,15 @@
 
                     this.$http.post('api/postClients', formData)
                         .then(response => {
-                            alert(response.data)
                             this.messages = response.data;
+                            if (response.data['erreurs']) {
+                                if (response.data['erreurs'][0]['Type'] === "Uniqueness") {
+                                    this.uniqueness()
+                                }
+
+                            } else {
+                                alert('success')
+                            }
                         })
                 }
             }
@@ -191,6 +212,16 @@
                             })
                         })
                     })
+            },
+            uniqueness() {
+                this.textsnackbartest = "Vous êtes déjà enregistré";
+                this.color = "error";
+                this.snackbarTest = true;
+            },
+            formok() {
+                this.textsnackbartest = "Vous êtes enregistré";
+                this.color = "success";
+                this.snackbarTest = true;
             }
         },
         created() {
