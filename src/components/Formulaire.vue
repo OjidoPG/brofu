@@ -137,12 +137,6 @@
                     v => /^[0-9][1-9][0-9]{3}$/.test(v) || 'Le Code Postal doit être valide',
                 ],
                 select: null,
-                items: [
-                    'Item 1',
-                    'Item 2',
-                    'Item 3',
-                    'Item 4',
-                ],
                 form: {
                     nom: 'toto',
                     prenom: 'toto',
@@ -222,6 +216,7 @@
                 this.reset()
             },
             reussite() {
+                this.appelEmplacements();
                 this.textsnackbartest = "Vous êtes enregistré";
                 this.icon="fas fa-check-circle"
                 this.color = "success";
