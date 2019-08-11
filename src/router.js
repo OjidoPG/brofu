@@ -22,6 +22,14 @@ export default new Router({
         layout:'inscription-layout'
       },
       component: ()=>import(/* webpackChunkName: "about" */ './views/Inscription.vue')
+    },
+    {
+      path: '/Administration',
+      name: 'Administration',
+      meta:{
+        layout:'admin-layout'
+      },
+      component: ()=>import(/* webpackChunkName: "about" */ './views/Administration.vue')
     }
   ]
 })

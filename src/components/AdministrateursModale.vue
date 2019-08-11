@@ -1,31 +1,52 @@
 <template>
     <v-layout justify-center>
-        <v-dialog :value="value"  @input="$emit('input', $event.target.value)" persistent max-width="300px">
+        <v-dialog :value="value" @input="$emit('input', $event.target.value)" persistent max-width="300px">
             <v-card>
                 <v-card-title>
                     <span class="headline">Administrateurs</span>
                 </v-card-title>
-                <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex md12>
-                                <v-text-field label="Identifiant" required></v-text-field>
-                            </v-flex>
-                            <v-flex md12>
-                                <v-text-field label="Mot de passe" type="password" required></v-text-field>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-flex>
-                    <v-btn small color="error" @click="closeModale">Fermer</v-btn>
-                    </v-flex>
-                    <v-flex>
-                    <v-btn small color="success" @click="saveAdmin">Valider</v-btn>
-                    </v-flex>
-                </v-card-actions>
+                <v-form
+                        ref="form"
+                        v-model="valid"
+                        lazy-validation
+                >
+                    <v-card-text>
+                        <v-container grid-list-md>
+                            <v-layout wrap>
+                                <v-flex md12>
+                                    <v-text-field
+                                            v-model="form.login"
+                                            :counter="15"
+                                            :rules="loginRules"
+                                            label="Identifiant"
+                                            required>
+
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex md12>
+                                    <v-text-field
+                                            v-model="form.mdp"
+                                            :counter="15"
+                                            :rules="mdpRules"
+                                            label="Mot de passe"
+                                            type="password"
+                                            required>
+
+                                    </v-text-field>
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-flex>
+                            <v-btn small color="error" @click="closeModale">Fermer</v-btn>
+                        </v-flex>
+                        <v-flex>
+                            <v-btn small color="success" @click="saveAdmin">Valider</v-btn>
+                        </v-flex>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
     </v-layout>
@@ -34,23 +55,55 @@
 <script>
     export default {
         name: "AdministrateursModale.vue",
-        props:{
-            value: {
-                type:Boolean,
-                default:false
+        data() {
+            return {
+                valid: true,
+                select:null,
+                form:{
+                    login:'',
+                    mdp:''
+                },
+                loginRules:[
+                    v => !!v || 'L\'identifiant est requis',
+                    v => (v && v.length >= 3) || 'Doit faire plus de 3 caractères',
+                    v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères'
+                ],
+                mdpRules:[
+                    v => !!v || 'Le mot de passe est requis',
+                    v => (v && v.length >= 3) || 'Doit faire plus de 5 caractères',
+                    v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères'
+                ]
             }
         },
-        methods : {
-            closeModale(){
+        props: {
+            value: {
+                type: Boolean,
+                default: false
+            }
+        },
+        methods: {
+            closeModale() {
                 this.$emit('input', false);
             },
-            saveAdmin(){
-                alert('save')
+            saveAdmin() {
+                if (this.$refs.form.validate()) {
+                    let formData = new FormData();
+                    formData.append("login", this.form.login);
+                    formData.append("mdp", this.form.mdp);
+
+                    this.$http.post('api/postadmins', formData)
+                        .then(response => {
+                            if (response.data['erreurs']){
+                                alert('erreur')
+                            } else{
+                                this.$router.push('/Administration');
+                            }
+                        })
+                }
+            },
+            reset() {
+                this.$refs.form.reset()
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>

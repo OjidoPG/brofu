@@ -12,9 +12,11 @@
   import Vue from 'vue'
   import InscriptionLayout from './layouts/InscriptionLayout'
   import AccueilLayout from './layouts/AccueilLayout'
+  import AdminLayout from './layouts/AdminLayout'
 
   Vue.component('InscriptionLayout', InscriptionLayout)
   Vue.component('AccueilLayout', AccueilLayout)
+  Vue.component('AdminLayout', AdminLayout)
 
   export default  {
     computed: {
