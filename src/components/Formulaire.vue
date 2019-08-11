@@ -1,108 +1,105 @@
 <template>
-    <div>
-        <v-form
-                ref="form"
-                v-model="valid"
-                lazy-validation
+    <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+    >
+        <v-text-field
+                v-model="form.nom"
+                :counter="15"
+                :rules="nameRules"
+                label="Nom"
+                required
+        ></v-text-field>
+
+        <v-text-field
+                v-model="form.prenom"
+                :counter="15"
+                :rules="nameRules"
+                label="Prenom"
+                required
+        ></v-text-field>
+
+        <v-text-field
+                v-model="form.telephone"
+                :counter="10"
+                :rules="telephoneRules"
+                label="Telephone"
+                required
+        ></v-text-field>
+
+        <v-text-field
+                v-model="form.mail"
+                :rules="emailRules"
+                label="E-mail"
+                required
+        ></v-text-field>
+
+        <v-text-field
+                v-model="form.adresse"
+                :counter="30"
+                :rules="adresseRules"
+                label="Adresse"
+                required
+        ></v-text-field>
+
+        <v-text-field
+                v-model="form.codepostal"
+                :counter="5"
+                :rules="cpRules"
+                label="Code Postal"
+                required
+        ></v-text-field>
+
+        <v-text-field
+                v-model="form.ville"
+                :counter="15"
+                :rules="nameRules"
+                label="Ville"
+                required
+        ></v-text-field>
+
+        <v-select
+                v-model="form.emplacements_id"
+                :items="emplacements"
+                item-text="texte"
+                item-value="valeur"
+                :rules="[v => !!v || 'Veuillez choisir un emplacement']"
+                label="Emplacements disponibles"
+                required
+        ></v-select>
+
+        <v-btn
+                color="error"
+                class="md-3 mt-5"
+                @click="annulation"
         >
-            <v-text-field
-                    v-model="form.nom"
-                    :counter="15"
-                    :rules="nameRules"
-                    label="Nom"
-                    required
-            ></v-text-field>
+            ACCUEIL
+        </v-btn>
 
-            <v-text-field
-                    v-model="form.prenom"
-                    :counter="15"
-                    :rules="nameRules"
-                    label="Prenom"
-                    required
-            ></v-text-field>
+        <v-btn
+                color="warning"
+                class="md-3 offset-md-1 mt-5"
+                @click="reset"
+        >
+            RECOMMENCER
+        </v-btn>
 
-            <v-text-field
-                    v-model="form.telephone"
-                    :counter="10"
-                    :rules="telephoneRules"
-                    label="Telephone"
-                    required
-            ></v-text-field>
-
-            <v-text-field
-                    v-model="form.mail"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-            ></v-text-field>
-
-            <v-text-field
-                    v-model="form.adresse"
-                    :counter="30"
-                    :rules="adresseRules"
-                    label="Adresse"
-                    required
-            ></v-text-field>
-
-            <v-text-field
-                    v-model="form.codepostal"
-                    :counter="5"
-                    :rules="cpRules"
-                    label="Code Postal"
-                    required
-            ></v-text-field>
-
-            <v-text-field
-                    v-model="form.ville"
-                    :counter="15"
-                    :rules="nameRules"
-                    label="Ville"
-                    required
-            ></v-text-field>
-
-            <v-select
-                    v-model="form.emplacements_id"
-                    :items="emplacements"
-                    item-text="texte"
-                    item-value="valeur"
-                    :rules="[v => !!v || 'Veuillez choisir un emplacement']"
-                    label="Emplacements disponibles"
-                    required
-            ></v-select>
-
-            <v-btn
-                    color="error"
-                    class="md-3 mt-5"
-                    @click="annulation"
-            >
-                ACCUEIL
-            </v-btn>
-
-            <v-btn
-                    color="warning"
-                    class="md-3 offset-md-1 mt-5"
-                    @click="reset"
-            >
-                RECOMMENCER
-            </v-btn>
-
-            <v-btn
-                    :disabled="!valid"
-                    color="success"
-                    class="md-3 offset-md-1 mt-5"
-                    @click="validation"
-            >
-                VALIDATION
-            </v-btn>
-        </v-form>
-
+        <v-btn
+                :disabled="!valid"
+                color="success"
+                class="md-3 offset-md-1 mt-5"
+                @click="validation"
+        >
+            VALIDATION
+        </v-btn>
         <snack-bar
                 v-model="snackbarTest"
                 :icon="icon"
                 :textsnackbar='textsnackbar'
                 :color="color"
         ></snack-bar>
-    </div>
+    </v-form>
 </template>
 
 <script>
