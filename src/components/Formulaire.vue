@@ -1,114 +1,117 @@
 <template>
-    <v-form
-            ref="form"
-            v-model="valid"
-            lazy-validation
-    >
-        <v-text-field
-                v-model="form.nom"
-                :counter="15"
-                :rules="nameRules"
-                label="Nom"
-                required
-        ></v-text-field>
-
-        <v-text-field
-                v-model="form.prenom"
-                :counter="15"
-                :rules="nameRules"
-                label="Prenom"
-                required
-        ></v-text-field>
-
-        <v-text-field
-                v-model="form.telephone"
-                :counter="10"
-                :rules="telephoneRules"
-                label="Telephone"
-                required
-        ></v-text-field>
-
-        <v-text-field
-                v-model="form.mail"
-                :rules="emailRules"
-                label="E-mail"
-                required
-        ></v-text-field>
-
-        <v-text-field
-                v-model="form.adresse"
-                :counter="30"
-                :rules="adresseRules"
-                label="Adresse"
-                required
-        ></v-text-field>
-
-        <v-text-field
-                v-model="form.codepostal"
-                :counter="5"
-                :rules="cpRules"
-                label="Code Postal"
-                required
-        ></v-text-field>
-
-        <v-text-field
-                v-model="form.ville"
-                :counter="15"
-                :rules="nameRules"
-                label="Ville"
-                required
-        ></v-text-field>
-
-        <v-select
-                v-model="form.emplacements_id"
-                :items="emplacements"
-                item-text="texte"
-                item-value="valeur"
-                :rules="[v => !!v || 'Veuillez choisir un emplacement']"
-                label="Emplacements disponibles"
-                required
-        ></v-select>
-
-        <v-btn
-                color="error"
-                class="md-3 mt-5"
-                @click="annulation"
+    <div>
+        <v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
         >
-            ACCUEIL
-        </v-btn>
+            <v-text-field
+                    v-model="form.nom"
+                    :counter="15"
+                    :rules="nameRules"
+                    label="Nom"
+                    required
+            ></v-text-field>
 
-        <v-btn
-                color="warning"
-                class="md-3 offset-md-1 mt-5"
-                @click="reset"
-        >
-            RECOMMENCER
-        </v-btn>
+            <v-text-field
+                    v-model="form.prenom"
+                    :counter="15"
+                    :rules="nameRules"
+                    label="Prenom"
+                    required
+            ></v-text-field>
 
-        <v-btn
-                :disabled="!valid"
-                color="success"
-                class="md-3 offset-md-1 mt-5"
-                @click="validation"
-        >
-            VALIDATION
-        </v-btn>
+            <v-text-field
+                    v-model="form.telephone"
+                    :counter="10"
+                    :rules="telephoneRules"
+                    label="Telephone"
+                    required
+            ></v-text-field>
 
-        <v-snackbar
+            <v-text-field
+                    v-model="form.mail"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+            ></v-text-field>
+
+            <v-text-field
+                    v-model="form.adresse"
+                    :counter="30"
+                    :rules="adresseRules"
+                    label="Adresse"
+                    required
+            ></v-text-field>
+
+            <v-text-field
+                    v-model="form.codepostal"
+                    :counter="5"
+                    :rules="cpRules"
+                    label="Code Postal"
+                    required
+            ></v-text-field>
+
+            <v-text-field
+                    v-model="form.ville"
+                    :counter="15"
+                    :rules="nameRules"
+                    label="Ville"
+                    required
+            ></v-text-field>
+
+            <v-select
+                    v-model="form.emplacements_id"
+                    :items="emplacements"
+                    item-text="texte"
+                    item-value="valeur"
+                    :rules="[v => !!v || 'Veuillez choisir un emplacement']"
+                    label="Emplacements disponibles"
+                    required
+            ></v-select>
+
+            <v-btn
+                    color="error"
+                    class="md-3 mt-5"
+                    @click="annulation"
+            >
+                ACCUEIL
+            </v-btn>
+
+            <v-btn
+                    color="warning"
+                    class="md-3 offset-md-1 mt-5"
+                    @click="reset"
+            >
+                RECOMMENCER
+            </v-btn>
+
+            <v-btn
+                    :disabled="!valid"
+                    color="success"
+                    class="md-3 offset-md-1 mt-5"
+                    @click="validation"
+            >
+                VALIDATION
+            </v-btn>
+        </v-form>
+
+        <snack-bar
                 v-model="snackbarTest"
-                :timeout="timeout"
+                :icon="icon"
+                :textsnackbar='textsnackbar'
                 :color="color"
-        >
-            {{ textsnackbartest }}
-            <i :class="icon"></i>
-        </v-snackbar>
-
-    </v-form>
+        ></snack-bar>
+    </div>
 </template>
 
 <script>
+    import SnackBar from '@/components/SnackBar.vue'
+
     export default {
-        components: {},
+        components: {
+            SnackBar
+        },
         data: () => ({
                 valid: true,
                 nameRules: [
@@ -152,10 +155,9 @@
                 success: false,
                 error: false,
                 snackbarTest: false,
-                textsnackbartest: '',
-                icon:'',
-                color: '',
-                timeout: 4000
+                icon: '',
+                textsnackbar: '',
+                color: ''
             }
         ),
         methods: {
@@ -176,10 +178,10 @@
                             if (response.data['erreurs']) {
                                 if (response.data['erreurs'][0]['Type'] === "Uniqueness") {
                                     this.uniqueness()
-                                }else{
+                                } else {
                                     this.jserror()
                                 }
-                            }else{
+                            } else {
                                 this.reussite();
                             }
                         })
@@ -209,23 +211,24 @@
                     })
             },
             uniqueness() {
-                this.textsnackbartest = "Vous êtes déjà enregistré";
-                this.icon="fas fa-ban"
+                this.textsnackbar = "Vous êtes déjà enregistré";
+                this.icon = "fas fa-ban"
                 this.color = "error";
                 this.snackbarTest = true;
+
                 this.reset()
             },
             reussite() {
                 this.appelEmplacements();
-                this.textsnackbartest = "Vous êtes enregistré";
-                this.icon="fas fa-check-circle"
+                this.textsnackbar = "Vous êtes enregistré";
+                this.icon = "fas fa-check-circle"
                 this.color = "success";
                 this.snackbarTest = true;
                 this.reset()
             },
-            jserror(){
-                this.textsnackbartest = "Erreur JavaScript, contactez les administrateurs";
-                this.icon="fas fa-user-ninja"
+            jserror() {
+                this.textsnackbar = "Erreur JavaScript, contactez les administrateurs";
+                this.icon = "fas fa-user-ninja"
                 this.color = "warning";
                 this.snackbarTest = true;
                 this.reset()
