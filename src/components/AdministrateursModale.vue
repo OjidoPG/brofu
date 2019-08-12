@@ -128,6 +128,7 @@
                 this.textsnackbar = messageErreur;
                 this.icon = "fas fa-ban"
                 this.color = "error";
+                this.snackbarTest = false;
                 this.snackbarTest = true;
                 this.reset()
             },
@@ -135,6 +136,7 @@
                 this.textsnackbar = messageIncomplet;
                 this.icon = "fas fa-user-ninja"
                 this.color = "warning";
+                this.snackbarTest = false;
                 this.snackbarTest = true;
                 this.reset()
             }
