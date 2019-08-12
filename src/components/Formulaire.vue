@@ -212,7 +212,6 @@
                 this.icon = "fas fa-ban"
                 this.color = "error";
                 this.snackbarTest = true;
-
                 this.reset()
             },
             reussite() {
