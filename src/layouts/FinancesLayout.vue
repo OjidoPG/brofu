@@ -1,7 +1,7 @@
 <template>
     <section>
         <navbar-generale-component
-                title="ADMINISTRATION"
+                title="FINANCES"
         ></navbar-generale-component>
         <slot/>
     </section>
@@ -11,7 +11,7 @@
     import NavbarGeneraleComponent from '@/components/Layouts/NavbarGeneraleComponent'
 
     export default {
-        name: "AdminLayout.vue",
+        name: "FinancesLayout.vue",
         components: {
             NavbarGeneraleComponent
         }

@@ -37,6 +37,7 @@
                 <v-btn
                         class="bntAdmin"
                         color="error"
+                        @click="retourAccueil"
                 >ACCUEIL
                 </v-btn>
             </v-col>
@@ -51,6 +52,11 @@
         name: "Administration.vue",
         components: {
             RepartitionBouton
+        },
+        methods:{
+            retourAccueil(){
+                this.$router.push('/');
+            }
         }
     }
 </script>

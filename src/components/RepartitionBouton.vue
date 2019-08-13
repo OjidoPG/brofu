@@ -3,6 +3,8 @@
             id="repartitionBouton"
             :to="aiguillage"
             block
+            color="indigo lighten-3"
+
     >{{texte}}</v-btn>
 </template>
 

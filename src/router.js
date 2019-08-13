@@ -30,6 +30,38 @@ export default new Router({
         layout:'admin-layout'
       },
       component: ()=>import(/* webpackChunkName: "about" */ './views/Administration.vue')
+    },
+    {
+      path: '/Brocanteurs',
+      name: 'Brocanteurs',
+      meta:{
+        layout:'brocanteurs-layout'
+      },
+      component: ()=>import(/* webpackChunkName: "about" */ './views/Brocanteurs.vue')
+    },
+    {
+      path: '/Emplacements',
+      name: 'Emplacements',
+      meta:{
+        layout:'emplacements-layout'
+      },
+      component: ()=>import(/* webpackChunkName: "about" */ './views/Emplacements.vue')
+    },
+    {
+      path: '/Finances',
+      name: 'Finances',
+      meta:{
+        layout:'finances-layout'
+      },
+      component: ()=>import(/* webpackChunkName: "about" */ './views/Finances.vue')
+    },
+    {
+      path: '/Administrateurs',
+      name: 'Administrateurs',
+      meta:{
+        layout:'administrateurs-layout'
+      },
+      component: ()=>import(/* webpackChunkName: "about" */ './views/Administrateurs.vue')
     }
   ]
 })
