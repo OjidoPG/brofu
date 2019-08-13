@@ -1,42 +1,46 @@
 <template>
     <v-container>
-        <v-layout align-center wrap>
-            <v-flex md-5>
+        <v-row class="md-12">
+            <v-col cols="3 offset-2">
                 <repartition-bouton
                         lien="brocanteurs"
                         texte="Gestion des brocanteurs"
                 >
                 </repartition-bouton>
-            </v-flex>
-            <v-flex md-5 offset-md-2>
+            </v-col>
+            <v-col cols="3 offset-2">
                 <repartition-bouton
                         lien="emplacements"
                         texte="Gestion des emplacements"
                 >
                 </repartition-bouton>
-            </v-flex>
-        </v-layout>
-        <v-layout align-center wrap>
-            <v-flex md-6>
+            </v-col>
+        </v-row>
+        <v-row class="md-12">
+            <v-col cols="3 offset-2">
                 <repartition-bouton
                         lien="finances"
                         texte="Gestion des finances"
                 >
                 </repartition-bouton>
-            </v-flex>
-            <v-flex md-5 offset-md-2>
+            </v-col>
+            <v-col cols="3 offset-2">
                 <repartition-bouton
                         lien="administrateurs"
                         texte="Gestion des administrateurs"
                 >
                 </repartition-bouton>
-            </v-flex>
-        </v-layout>
-        <v-layout align-center wrap>
-            <v-flex md-2>
-                <v-btn class="bntAdmin">ACCUEIL</v-btn>
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
+        <v-row class="md-12 text-center">
+            <v-col>
+                <v-btn
+                        class="bntAdmin"
+                        color="error"
+                >ACCUEIL
+                </v-btn>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 

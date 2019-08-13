@@ -45,12 +45,6 @@
                             <v-btn small color="success" @click="saveAdmin">Valider</v-btn>
                         </v-flex>
                     </v-card-actions>
-                    <snack-bar
-                            v-model="snackbarTest"
-                            :icon="icon"
-                            :textsnackbar='textsnackbar'
-                            :color="color"
-                    ></snack-bar>
                 </v-form>
             </v-card>
         </v-dialog>
@@ -58,13 +52,8 @@
 </template>
 
 <script>
-    import SnackBar from '@/components/SnackBar.vue'
-
     export default {
         name: "AdministrateursModale.vue",
-        components: {
-            SnackBar
-        },
         data() {
             return {
                 valid: true,
@@ -82,11 +71,7 @@
                     v => !!v || 'Le mot de passe est requis',
                     v => (v && v.length >= 3) || 'Doit faire plus de 5 caractères',
                     v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères'
-                ],
-                snackbarTest: false,
-                icon: '',
-                textsnackbar: '',
-                color: ''
+                ]
             }
         },
         props: {
@@ -125,19 +110,11 @@
                 this.$refs.form.reset()
             },
             erreurs(messageErreur) {
-                this.textsnackbar = messageErreur;
-                this.icon = "fas fa-ban"
-                this.color = "error";
-                this.snackbarTest = false;
-                this.snackbarTest = true;
+                this.$toast.error(messageErreur)
                 this.reset()
             },
             incomplet(messageIncomplet) {
-                this.textsnackbar = messageIncomplet;
-                this.icon = "fas fa-user-ninja"
-                this.color = "warning";
-                this.snackbarTest = false;
-                this.snackbarTest = true;
+                this.$toast.warning(messageIncomplet)
                 this.reset()
             }
         }

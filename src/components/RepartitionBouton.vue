@@ -30,7 +30,7 @@
 <style scoped>
     #repartitionBouton {
         height: 200px;
-        width: 400px;
+        width: 200px;
         vertical-align: middle;
         display: flex;
         align-items: center;
