@@ -79,7 +79,6 @@
                     this.$http.post('api/postAdmins', formData)
                         .then(response => {
                             if (response.data['Erreurs']) {
-                                alert(response.data['Erreurs']['Message'])
                                 this.erreurs(response.data['Erreurs']['Message']);
                             }
 
