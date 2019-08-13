@@ -93,22 +93,11 @@
         >
             VALIDATION
         </v-btn>
-        <snack-bar
-                v-model="snackbarTest"
-                :icon="icon"
-                :textsnackbar='textsnackbar'
-                :color="color"
-        ></snack-bar>
     </v-form>
 </template>
 
 <script>
-    import SnackBar from '@/components/SnackBar.vue'
-
     export default {
-        components: {
-            SnackBar
-        },
         data: () => ({
                 valid: true,
                 nameRules: [
@@ -150,11 +139,7 @@
                 emplacements: [],
                 messages: [],
                 success: false,
-                error: false,
-                snackbarTest: false,
-                icon: '',
-                textsnackbar: '',
-                color: ''
+                error: false
             }
         ),
         methods: {
@@ -172,14 +157,16 @@
 
                     this.$http.post('api/postClients', formData)
                         .then(response => {
-                            if (response.data['erreurs']) {
-                                if (response.data['erreurs'][0]['Type'] === "Uniqueness") {
-                                    this.uniqueness()
+                            if (response.data['Erreurs']) {
+                                if (response.data['Erreurs'][0]['Type'] === "Uniqueness") {
+                                    this.uniqueness(response.data['Erreurs'][0]['Message'])
+                                    this.messages=''
                                 } else {
                                     this.jserror()
                                 }
-                            } else {
-                                this.reussite();
+                            }
+                            if (response.data['Success']){
+                                this.reussite(response.data['Success'][0]['Message']);
                             }
                         })
                 }
@@ -207,26 +194,22 @@
                         })
                     })
             },
-            uniqueness() {
-                this.textsnackbar = "Vous êtes déjà enregistré";
-                this.icon = "fas fa-ban"
-                this.color = "error";
-                this.snackbarTest = true;
+            uniqueness(messageErreur) {
+                this.$toast(messageErreur,{
+                    color: 'error',
+                    icon:'fas fa-exclamation-circle'
+                })
                 this.reset()
             },
-            reussite() {
+            reussite(messageReussite) {
                 this.appelEmplacements();
-                this.textsnackbar = "Vous êtes enregistré";
-                this.icon = "fas fa-check-circle"
-                this.color = "success";
-                this.snackbarTest = true;
+                this.$toast(messageReussite,{
+                    color:'success',
+                    icon:'fas fa-check-circle'
+                })
                 this.reset()
             },
             jserror() {
-                this.textsnackbar = "Erreur JavaScript, contactez les administrateurs";
-                this.icon = "fas fa-user-ninja"
-                this.color = "warning";
-                this.snackbarTest = true;
                 this.reset()
             }
         },
@@ -234,5 +217,4 @@
             this.appelEmplacements();
         }
     }
-
 </script>

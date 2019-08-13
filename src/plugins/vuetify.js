@@ -9,13 +9,13 @@ Vue.component('v-icon', VIcon)
 Vue.component('v-btn', VBtn)
 Vue.use(VuetifyToast, {
   x: 'center', // default
-  y: 'top', // default
+  y: 'bottom', // default
   color: 'info', // default
   icon: 'fa fa-home',
   classes: [
     'body-2'
   ],
-  timeout: 3000, // default
+  timeout: 6000, // default
   dismissable: true, // default
   multiLine: false, // default
   vertical: false, // default

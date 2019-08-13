@@ -16,8 +16,6 @@
                                 <v-flex md12>
                                     <v-text-field
                                             v-model="form.login"
-                                            :counter="15"
-                                            :rules="loginRules"
                                             label="Identifiant"
                                             required>
 
@@ -26,8 +24,6 @@
                                 <v-flex md12>
                                     <v-text-field
                                             v-model="form.mdp"
-                                            :counter="15"
-                                            :rules="mdpRules"
                                             label="Mot de passe"
                                             type="password"
                                             required>
@@ -61,17 +57,7 @@
                 form: {
                     login: '',
                     mdp: ''
-                },
-                loginRules: [
-                    v => !!v || 'L\'identifiant est requis',
-                    v => (v && v.length >= 3) || 'Doit faire plus de 3 caractères',
-                    v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères'
-                ],
-                mdpRules: [
-                    v => !!v || 'Le mot de passe est requis',
-                    v => (v && v.length >= 3) || 'Doit faire plus de 5 caractères',
-                    v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères'
-                ]
+                }
             }
         },
         props: {
@@ -93,6 +79,7 @@
                     this.$http.post('api/postAdmins', formData)
                         .then(response => {
                             if (response.data['Erreurs']) {
+                                alert(response.data['Erreurs']['Message'])
                                 this.erreurs(response.data['Erreurs']['Message']);
                             }
 
