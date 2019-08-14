@@ -197,7 +197,8 @@
             uniqueness(messageErreur) {
                 this.$toast(messageErreur,{
                     color: 'error',
-                    icon:'fas fa-exclamation-circle'
+                    icon:'fas fa-exclamation-circle',
+                    queueable: true
                 })
                 this.reset()
             },
@@ -205,7 +206,8 @@
                 this.appelEmplacements();
                 this.$toast(messageReussite,{
                     color:'success',
-                    icon:'fas fa-check-circle'
+                    icon:'fas fa-check-circle',
+                    queueable: true
                 })
                 this.reset()
             },
