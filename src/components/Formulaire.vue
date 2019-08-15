@@ -10,7 +10,7 @@
                 :rules="nameRules"
                 label="Nom"
                 required
-        ></v-text-field>
+        ><p v-if="formError.nomError" class="validateForm">Corrigez le nom</p></v-text-field>
 
         <v-text-field
                 v-model="form.prenom"
@@ -18,7 +18,7 @@
                 :rules="nameRules"
                 label="Prenom"
                 required
-        ></v-text-field>
+        ><p v-if="formError.prenomError" class="validateForm">Corrigez le prénom</p></v-text-field>
 
         <v-text-field
                 v-model="form.telephone"
@@ -27,6 +27,7 @@
                 label="Telephone"
                 required
         ></v-text-field>
+        <p v-if="formError.telephoneError" class="validateForm">Corrigez le numéro de téléphone</p>
 
         <v-text-field
                 v-model="form.mail"
@@ -34,6 +35,7 @@
                 label="E-mail"
                 required
         ></v-text-field>
+        <p v-if="formError.mailError" class="validateForm">Corrigez l'e-mail</p>
 
         <v-text-field
                 v-model="form.adresse"
@@ -42,6 +44,7 @@
                 label="Adresse"
                 required
         ></v-text-field>
+        <p v-if="formError.adresseError" class="validateForm">Corrigez l'adresse</p>
 
         <v-text-field
                 v-model="form.codepostal"
@@ -50,24 +53,26 @@
                 label="Code Postal"
                 required
         ></v-text-field>
+        <p v-if="formError.codepostalError" class="validateForm">Corrigez le code postal</p>
 
         <v-text-field
                 v-model="form.ville"
                 :counter="15"
-                :rules="nameRules"
+
                 label="Ville"
                 required
         ></v-text-field>
-
+        <p v-if="formError.villeError" class="validateForm">Corrigez la ville</p>
+        <!--        :rules="nameRules"-->
         <v-select
                 v-model="form.emplacements_id"
                 :items="emplacements"
                 item-text="texte"
                 item-value="valeur"
-                :rules="[v => !!v || 'Veuillez choisir un emplacement']"
                 label="Emplacements disponibles"
                 required
         ></v-select>
+        <p v-if="formError.emplacements_idError" class="validateForm">Corrigez l'emplacement</p>
 
         <v-btn
                 color="error"
@@ -136,6 +141,16 @@
                     ville: 'nancy',
                     emplacements_id: ''
                 },
+                formError: {
+                    nomError: false,
+                    prenomError: false,
+                    telephoneError: false,
+                    mailError: false,
+                    adresseError: false,
+                    codepostalError: false,
+                    villeError: false,
+                    emplacements_idError: false
+                },
                 emplacements: [],
                 messages: [],
                 success: false,
@@ -157,15 +172,45 @@
 
                     this.$http.post('api/postClients', formData)
                         .then(response => {
+                            this.messages = []
                             if (response.data['Erreurs']) {
                                 if (response.data['Erreurs'][0]['Type'] === "Uniqueness") {
                                     this.uniqueness(response.data['Erreurs'][0]['Message'])
-                                    this.messages=''
+                                    this.messages = ''
                                 } else {
-                                    this.jserror()
+                                    this.messages = response.data['Erreurs']
+                                    for (let i = 0; this.messages.length; i++) {
+                                        switch (this.messages[i]['Field']) {
+                                            case 'nom':
+                                                this.formError.nomError = true
+                                                break;
+                                            case 'prenom':
+                                                this.formError.prenomError = true
+                                                break;
+                                            case 'telephone':
+                                                this.formError.telephoneError = true
+                                                break;
+                                            case 'mail':
+                                                this.formError.mailError = true
+                                                break;
+                                            case 'adresse':
+                                                this.formError.adresseError = true
+                                                break;
+                                            case 'ville':
+                                                this.formError.villeError = true
+                                                break;
+                                            case 'emplacements_id':
+                                                this.formError.emplacements_idError = true
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+
+
                                 }
                             }
-                            if (response.data['Success']){
+                            if (response.data['Success']) {
                                 this.reussite(response.data['Success'][0]['Message']);
                             }
                         })
@@ -195,17 +240,17 @@
                     })
             },
             uniqueness(messageErreur) {
-                this.$toast(messageErreur,{
+                this.$toast(messageErreur, {
                     color: 'error',
-                    icon:'fas fa-exclamation-circle'
+                    icon: 'fas fa-exclamation-circle'
                 })
                 this.reset()
             },
             reussite(messageReussite) {
                 this.appelEmplacements();
-                this.$toast(messageReussite,{
-                    color:'success',
-                    icon:'fas fa-check-circle'
+                this.$toast(messageReussite, {
+                    color: 'success',
+                    icon: 'fas fa-check-circle'
                 })
                 this.reset()
             },
@@ -218,3 +263,9 @@
         }
     }
 </script>
+<style>
+    .validateForm {
+        color: red;
+        font-size: small;
+    }
+</style>
