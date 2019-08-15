@@ -58,7 +58,7 @@
         <v-text-field
                 v-model="form.ville"
                 :counter="15"
-
+                :rules="nameRules"
                 label="Ville"
                 required
         ></v-text-field>
