@@ -206,8 +206,6 @@
                                                 break;
                                         }
                                     }
-
-
                                 }
                             }
                             if (response.data['Success']) {
@@ -242,31 +240,18 @@
             uniqueness(messageErreur) {
                 this.$toast(messageErreur, {
                     color: 'error',
-<<<<<<< HEAD
                     icon: 'fas fa-exclamation-circle'
-=======
-                    icon:'fas fa-exclamation-circle',
-                    queueable: true
->>>>>>> eefad1b94546f06be838bb0eead88ee2ad24376c
+
                 })
                 this.reset()
             },
             reussite(messageReussite) {
                 this.appelEmplacements();
-<<<<<<< HEAD
                 this.$toast(messageReussite, {
                     color: 'success',
                     icon: 'fas fa-check-circle'
-=======
-                this.$toast(messageReussite,{
-                    color:'success',
-                    icon:'fas fa-check-circle',
-                    queueable: true
->>>>>>> eefad1b94546f06be838bb0eead88ee2ad24376c
+
                 })
-                this.reset()
-            },
-            jserror() {
                 this.reset()
             }
         },

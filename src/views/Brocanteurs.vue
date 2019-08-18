@@ -16,25 +16,25 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.nom" label="Nom"></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.prenom" label="Prénom"></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.telephone" label="Téléphone"></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.mail" label="E-mail"></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.adresse" label="Adresse"></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.codepostal" label="Code Postal"></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
                                     </v-col>
                                 </v-row>
