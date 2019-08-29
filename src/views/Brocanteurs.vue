@@ -37,6 +37,9 @@
                                     <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
                                     </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
+                                    </v-col>
                                 </v-row>
                             </v-container>
                         </v-card-text>
