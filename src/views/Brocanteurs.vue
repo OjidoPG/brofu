@@ -38,10 +38,13 @@
                                         <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
+                                        <v-text-field v-model="editedItem.emplacements.numero" label="Numéro"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
+                                        <v-text-field v-model="editedItem.emplacements.taille" label="Taille"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                        <v-text-field v-model="editedItem.emplacements.prix" label="Prix"></v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -86,6 +89,8 @@
                 {text: 'Code Postal', value: 'codepostal'},
                 {text: 'Ville', value: 'ville'},
                 {text: 'Numéro', value: 'emplacements.numero'},
+                {text: 'Taille', value: 'emplacements.taille'},
+                {text: 'Prix', value: 'emplacements.prix'},
                 {text: 'Actions', value: 'action', sortable: false}
             ],
             brocanteurs: [],
@@ -98,6 +103,13 @@
                 adresse: '',
                 codepostal:'',
                 ville:'',
+                emplacements:
+                    {
+                        numero:'',
+                        taille:'',
+                        prix:''
+                    }
+
             },
             defaultItem: {
                 nom: '',
@@ -107,6 +119,12 @@
                 adresse: '',
                 codepostal:'',
                 ville:'',
+                emplacements:
+                    {
+                        numero:'',
+                        taille:'',
+                        prix:''
+                    }
             },
         }),
         watch: {
