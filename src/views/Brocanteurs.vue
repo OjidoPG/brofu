@@ -38,9 +38,18 @@
                                     <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
                                     </v-col>
+                                    <v-col cols="12" sm="12" md="12" v-if="editedItem.emplacement">
+                                        <v-text-field v-model="editedItem.emplacement" label="Emplacement actuel" disabled></v-text-field>
+                                    </v-col>
                                     <v-col cols="12" sm="12" md="12">
-                                        <v-text-field v-model="editedItem.emplacement"
-                                                      label="Emplacement"></v-text-field>
+                                        <v-select
+                                                v-model="emplacementsListe.emplacements_id"
+                                                :items="emplacementsListe"
+                                                item-text="texte"
+                                                item-value="valeur"
+                                                label="Emplacements disponibles"
+                                                required
+                                        ></v-select>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -89,6 +98,7 @@
             ],
             brocanteurs: [],
             editedIndex: -1,
+            emplacementsListe:[],
             editedItem: {
                 nom: '',
                 prenom: '',
@@ -118,6 +128,13 @@
 
         created() {
             this.initialize();
+            this.appelEmplacements();
+        },
+
+        beforeCreate : function () {
+            if (!sessionStorage.getItem('admin')){
+                this.$router.push('/');
+            }
         },
 
         methods: {
@@ -156,7 +173,14 @@
                     this.brocanteurs.push(this.editedItem)
                 }
                 this.close()
-            }
+            },
+            appelEmplacements() {
+                this.emplacements = [];
+                this.$http.get('api/getEmplacementsNonOccupe')
+                    .then(response => {
+                        this.emplacementsListe = response.data.liste
+                    })
+            },
         }
     }
 </script>
