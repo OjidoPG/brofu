@@ -57,6 +57,11 @@
             retourAccueil(){
                 this.$router.push('/');
             }
+        },
+        beforeCreate : function () {
+           if (!sessionStorage.getItem('admin')){
+               this.$router.push('/');
+           }
         }
     }
 </script>

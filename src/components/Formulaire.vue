@@ -225,7 +225,7 @@
             ,
             appelEmplacements() {
                 this.emplacements = [];
-                this.$http.get('api/getEmplacements')
+                this.$http.get('api/getEmplacementsNonOccupe')
                     .then(response => {
                         this.emplacements = response.data.liste
                     })

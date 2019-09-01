@@ -87,6 +87,7 @@
                             }
 
                             if (response.data['Success']) {
+                                sessionStorage.setItem('admin', 'ok');
                                 this.$router.push('/Administration');
                             }
                         })
