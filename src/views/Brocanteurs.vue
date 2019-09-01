@@ -1,84 +1,103 @@
 <template>
-    <v-data-table
-            :headers="headers"
-            :items="brocanteurs"
-            sort-by="brocanteurs.nom"
-            class="elevation-1"
-    >
-        <template v-slot:top>
-            <v-toolbar flat color="white">
-                <v-spacer></v-spacer>
-                <v-dialog v-model="dialog" max-width="500px">
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="success" dark class="mb-2" v-on="on">Ajouter</v-btn>
-                    </template>
-                    <v-card>
-                        <v-card-text>
-                            <v-container>
-                                <v-row>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.nom" label="Nom"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.prenom" label="Prénom"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.telephone" label="Téléphone"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.mail" label="E-mail"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.adresse" label="Adresse"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.codepostal"
-                                                      label="Code Postal"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="12" md="12" v-if="editedItem.emplacement">
-                                        <v-text-field v-model="editedItem.emplacement" label="Emplacement actuel" disabled></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="12" md="12">
-                                        <v-select
-                                                v-model="emplacementsListe.emplacements_id"
-                                                :items="emplacementsListe"
-                                                item-text="texte"
-                                                item-value="valeur"
-                                                label="Emplacements disponibles"
-                                                required
-                                        ></v-select>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="error" @click="close">Annulation</v-btn>
-                            <v-btn color="success" @click="save">Sauvegarder</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-            </v-toolbar>
-        </template>
-        <template v-slot:item.action="{ item }">
-            <v-icon
-                    small
-                    class="mr-2"
-                    @click="editItem(item)"
-            >
-                fas fa-edit
-            </v-icon>
-            <v-icon
-                    small
-                    @click="deleteItem(item)"
-            >
-                fas fa-trash-alt
-            </v-icon>
-        </template>
-    </v-data-table>
+    <div>
+        <v-data-table
+                :headers="headers"
+                :items="brocanteurs"
+                sort-by="brocanteurs.nom"
+                class="elevation-1"
+        >
+            <template v-slot:top>
+                <v-toolbar flat color="white">
+                    <v-spacer></v-spacer>
+                    <v-dialog v-model="dialog" max-width="500px">
+                        <template v-slot:activator="{ on }">
+                            <v-btn color="success" dark class="mb-2" v-on="on">Ajouter</v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.nom" label="Nom"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.prenom" label="Prénom"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.telephone"
+                                                          label="Téléphone"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.mail" label="E-mail"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.adresse" label="Adresse"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.codepostal"
+                                                          label="Code Postal"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="12" md="12" v-if="editedItem.emplacement">
+                                            <v-text-field v-model="editedItem.emplacement" label="Emplacement actuel"
+                                                          disabled></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="12" md="12">
+                                            <v-select
+                                                    v-model="emplacementsListe.emplacements_id"
+                                                    :items="emplacementsListe"
+                                                    item-text="texte"
+                                                    item-value="valeur"
+                                                    label="Emplacements disponibles"
+                                                    required
+                                            ></v-select>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="error" @click="close">Annulation</v-btn>
+                                <v-btn color="success" @click="save">Sauvegarder</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-toolbar>
+            </template>
+            <template v-slot:item.action="{ item }">
+                <v-icon
+                        small
+                        class="mr-2"
+                        @click="editItem(item)"
+                >
+                    fas fa-edit
+                </v-icon>
+                <v-icon
+                        small
+                        @click="deleteItem(item)"
+                >
+                    fas fa-trash-alt
+                </v-icon>
+            </template>
+        </v-data-table>
+        <v-btn
+                color="error"
+                class="md-3 offset-md-3 mt-5"
+                @click="goAccueil"
+        >
+            ACCUEIL
+        </v-btn>
+
+        <v-btn
+                color="success"
+                class="md-3 offset-md-4 mt-5"
+                @click="goAdmin"
+        >
+            ADMINISTRATION
+        </v-btn>
+    </div>
 </template>
 
 <script>
@@ -98,7 +117,7 @@
             ],
             brocanteurs: [],
             editedIndex: -1,
-            emplacementsListe:[],
+            emplacementsListe: [],
             editedItem: {
                 nom: '',
                 prenom: '',
@@ -131,8 +150,8 @@
             this.appelEmplacements();
         },
 
-        beforeCreate : function () {
-            if (!sessionStorage.getItem('admin')){
+        beforeCreate: function () {
+            if (!sessionStorage.getItem('admin')) {
                 this.$router.push('/');
             }
         },
@@ -167,6 +186,7 @@
             },
 
             save() {
+
                 if (this.editedIndex > -1) {
                     Object.assign(this.brocanteurs[this.editedIndex], this.editedItem)
                 } else {
@@ -181,6 +201,13 @@
                         this.emplacementsListe = response.data.liste
                     })
             },
+            goAccueil() {
+                this.$router.push('/');
+            },
+            goAdmin(){
+                this.$router.push('/Administration');
+            }
+
         }
     }
 </script>
