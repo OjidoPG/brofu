@@ -63,12 +63,11 @@
                 required
         ></v-text-field>
         <p v-if="formError.villeError" class="validateForm">Corrigez la ville</p>
-        <!--        :rules="nameRules"-->
         <v-select
                 v-model="form.emplacements_id"
                 :items="emplacements"
                 item-text="texte"
-                item-value="valeur"
+                item-value="id"
                 label="Emplacements disponibles"
                 required
         ></v-select>
@@ -226,8 +225,8 @@
             appelEmplacements() {
                 this.emplacements = [];
                 this.$http.get('api/getEmplacementsNonOccupe')
-                    .then(response => {
-                        this.emplacements = response.data.liste
+                    .then(responseEmpl => {
+                        this.emplacements = responseEmpl.data.liste
                     })
             },
             uniqueness(messageErreur) {

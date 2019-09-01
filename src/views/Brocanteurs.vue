@@ -46,10 +46,10 @@
                                         </v-col>
                                         <v-col cols="12" sm="12" md="12">
                                             <v-select
-                                                    v-model="emplacementsListe.emplacements_id"
+                                                    v-model="editedItem.emplacements_id"
                                                     :items="emplacementsListe"
                                                     item-text="texte"
-                                                    item-value="valeur"
+                                                    item-value="id"
                                                     label="Emplacements disponibles"
                                                     required
                                             ></v-select>
