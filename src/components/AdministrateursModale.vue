@@ -55,8 +55,8 @@
                 valid: true,
                 select: null,
                 form: {
-                    login: '',
-                    mdp: ''
+                    login: 'admin',
+                    mdp: 'admin'
                 }
             }
         },

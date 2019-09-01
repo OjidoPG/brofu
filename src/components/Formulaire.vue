@@ -227,14 +227,7 @@
                 this.emplacements = [];
                 this.$http.get('api/getEmplacements')
                     .then(response => {
-                        response.data.liste.forEach(item => {
-                            this.emplacements.push({
-                                valeur: item.id,
-                                texte: "Emplacement numéro : " + item.numero +
-                                    " - taille : " + item.taille +
-                                    " - prix : " + item.prix + " euros"
-                            })
-                        })
+                        this.emplacements = response.data.liste
                     })
             },
             uniqueness(messageErreur) {

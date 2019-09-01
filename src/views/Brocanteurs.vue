@@ -32,19 +32,15 @@
                                         <v-text-field v-model="editedItem.adresse" label="Adresse"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.codepostal" label="Code Postal"></v-text-field>
+                                        <v-text-field v-model="editedItem.codepostal"
+                                                      label="Code Postal"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="6">
                                         <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.emplacements.numero" label="Numéro"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.emplacements.taille" label="Taille"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.emplacements.prix" label="Prix"></v-text-field>
+                                    <v-col cols="12" sm="12" md="12">
+                                        <v-text-field v-model="editedItem.emplacement"
+                                                      label="Emplacement"></v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -88,9 +84,7 @@
                 {text: 'Adresse', value: 'adresse'},
                 {text: 'Code Postal', value: 'codepostal'},
                 {text: 'Ville', value: 'ville'},
-                {text: 'Numéro', value: 'emplacements.numero'},
-                {text: 'Taille', value: 'emplacements.taille'},
-                {text: 'Prix', value: 'emplacements.prix'},
+                {text: 'Emplacement', value: 'emplacement'},
                 {text: 'Actions', value: 'action', sortable: false}
             ],
             brocanteurs: [],
@@ -101,15 +95,9 @@
                 telephone: '',
                 mail: '',
                 adresse: '',
-                codepostal:'',
-                ville:'',
-                emplacements:
-                    {
-                        numero:'',
-                        taille:'',
-                        prix:''
-                    }
-
+                codepostal: '',
+                ville: '',
+                emplacement: ''
             },
             defaultItem: {
                 nom: '',
@@ -117,14 +105,9 @@
                 telephone: '',
                 mail: '',
                 adresse: '',
-                codepostal:'',
-                ville:'',
-                emplacements:
-                    {
-                        numero:'',
-                        taille:'',
-                        prix:''
-                    }
+                codepostal: '',
+                ville: '',
+                emplacement: ''
             },
         }),
         watch: {
@@ -134,15 +117,15 @@
         },
 
         created() {
-            this.initialize()
+            this.initialize();
         },
 
         methods: {
             initialize() {
                 this.brocanteurs = []
-                this.$http.get('api/getClients')
+                this.$http.get('api/getAllClients')
                     .then(response => {
-                        this.brocanteurs=response.data.liste
+                        this.brocanteurs = response.data.liste
                     })
 
             },
@@ -173,7 +156,7 @@
                     this.brocanteurs.push(this.editedItem)
                 }
                 this.close()
-            },
-        },
+            }
+        }
     }
 </script>
