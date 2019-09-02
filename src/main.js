@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 axios.defaults.baseURL = "http://brob.local/";
-axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token');
+axios.defaults.headers.common['Authorization'] = 'Bearer '+sessionStorage.getItem('token');
 
 Vue.config.productionTip = false
 

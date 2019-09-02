@@ -87,7 +87,7 @@
                             }
 
                             if (response.data['Success']) {
-                                sessionStorage.setItem('token', response.data['JWT']);
+                                sessionStorage.setItem('token', response.data['Success']['JWT']);
                                 this.$router.push('/Administration');
                             }
                         })
