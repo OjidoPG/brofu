@@ -150,12 +150,6 @@
             this.appelEmplacements();
         },
 
-        beforeCreate: function () {
-            if (!sessionStorage.getItem('admin')) {
-                this.$router.push('/');
-            }
-        },
-
         methods: {
             initialize() {
                 this.brocanteurs = []

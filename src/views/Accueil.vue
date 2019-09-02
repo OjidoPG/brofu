@@ -14,9 +14,6 @@
         name: "Accueil",
         components: {
             Carousel
-        },
-        beforeCreate : function () {
-            sessionStorage.clear();
         }
     };
 </script>
