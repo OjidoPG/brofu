@@ -10,7 +10,8 @@
                 :rules="nameRules"
                 label="Nom"
                 required
-        ><p v-if="formError.nomError" class="validateForm">Corrigez le nom</p></v-text-field>
+        ></v-text-field>
+        <p v-if="formError.nomError" class="validateForm">Corrigez le nom</p>
 
         <v-text-field
                 v-model="form.prenom"
@@ -18,7 +19,8 @@
                 :rules="nameRules"
                 label="Prenom"
                 required
-        ><p v-if="formError.prenomError" class="validateForm">Corrigez le prénom</p></v-text-field>
+        ></v-text-field>
+        <p v-if="formError.prenomError" class="validateForm">Corrigez le prénom</p>
 
         <v-text-field
                 v-model="form.telephone"
@@ -63,6 +65,7 @@
                 required
         ></v-text-field>
         <p v-if="formError.villeError" class="validateForm">Corrigez la ville</p>
+
         <v-select
                 v-model="form.emplacements_id"
                 :items="emplacements"
