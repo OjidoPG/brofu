@@ -54,6 +54,7 @@
                                                     required
                                             ></v-select>
                                         </v-col>
+                                        <div hidden v-model="editedItem.id"></div>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -126,7 +127,8 @@
                 adresse: '',
                 codepostal: '',
                 ville: '',
-                emplacement: ''
+                emplacement: '',
+                id:''
             },
             defaultItem: {
                 nom: '',
@@ -178,8 +180,60 @@
                     this.editedIndex = -1
                 }, 300)
             },
-
             save() {
+                let formData = new FormData();
+                formData.append("nom", this.editedItem.nom);
+                formData.append("prenom", this.editedItem.prenom);
+                formData.append("telephone", this.editedItem.telephone);
+                formData.append("mail", this.editedItem.mail);
+                formData.append("adresse", this.editedItem.adresse);
+                formData.append("codepostal", this.editedItem.codepostal);
+                formData.append("ville", this.editedItem.ville);
+                formData.append("emplacements_id", this.editedItem.emplacements_id);
+                formData.append("id", this.editedItem.id)
+
+                this.$http.post('clients/postClients', formData)
+                    .then(response => {
+                        this.messages = []
+                        if (response.data['Erreurs']) {
+                            if (response.data['Erreurs'][0]['Type'] === "Uniqueness") {
+                                this.uniqueness(response.data['Erreurs'][0]['Message'])
+                                this.messages = ''
+                            } else {
+                                this.messages = response.data['Erreurs']
+                                for (let i = 0; this.messages.length; i++) {
+                                    switch (this.messages[i]['Field']) {
+                                        case 'nom':
+                                            this.formError.nomError = true
+                                            break;
+                                        case 'prenom':
+                                            this.formError.prenomError = true
+                                            break;
+                                        case 'telephone':
+                                            this.formError.telephoneError = true
+                                            break;
+                                        case 'mail':
+                                            this.formError.mailError = true
+                                            break;
+                                        case 'adresse':
+                                            this.formError.adresseError = true
+                                            break;
+                                        case 'ville':
+                                            this.formError.villeError = true
+                                            break;
+                                        case 'emplacements_id':
+                                            this.formError.emplacements_idError = true
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                        if (response.data['Success']) {
+                            this.reussite(response.data['Success'][0]['Message']);
+                        }
+                    })
 
                 if (this.editedIndex > -1) {
                     Object.assign(this.brocanteurs[this.editedIndex], this.editedItem)
@@ -187,6 +241,15 @@
                     this.brocanteurs.push(this.editedItem)
                 }
                 this.close()
+            },
+            reussite(messageReussite) {
+                this.appelEmplacements();
+                this.$toast(messageReussite, {
+                    color: 'success',
+                    icon: 'fas fa-check-circle'
+
+                })
+                this.reset()
             },
             appelEmplacements() {
                 this.emplacements = [];
@@ -198,7 +261,7 @@
             goAccueil() {
                 this.$router.push('/');
             },
-            goAdmin(){
+            goAdmin() {
                 this.$router.push('/Administration');
             }
 
