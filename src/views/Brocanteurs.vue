@@ -54,7 +54,7 @@
                                                     required
                                             ></v-select>
                                         </v-col>
-                                        <div hidden v-model="editedItem.id"></div>
+                                        <input hidden v-model="editedItem.id"></input>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -117,6 +117,7 @@
                 {text: 'Actions', value: 'action', sortable: false}
             ],
             brocanteurs: [],
+            messages:[],
             editedIndex: -1,
             emplacementsListe: [],
             editedItem: {
