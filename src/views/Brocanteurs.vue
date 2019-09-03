@@ -153,7 +153,7 @@
         methods: {
             initialize() {
                 this.brocanteurs = []
-                this.$http.get('api/getAllClients')
+                this.$http.get('clients/getAllClients')
                     .then(response => {
                         this.brocanteurs = response.data.liste
                     })
@@ -190,7 +190,7 @@
             },
             appelEmplacements() {
                 this.emplacements = [];
-                this.$http.get('api/getEmplacementsNonOccupe')
+                this.$http.get('emplacements/getEmplacementsNonOccupe')
                     .then(response => {
                         this.emplacementsListe = response.data.liste
                     })

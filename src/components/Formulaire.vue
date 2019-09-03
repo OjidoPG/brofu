@@ -172,7 +172,7 @@
                     formData.append("ville", this.form.ville);
                     formData.append("emplacements_id", this.form.emplacements_id);
 
-                    this.$http.post('api/postClients', formData)
+                    this.$http.post('clients/postClients', formData)
                         .then(response => {
                             this.messages = []
                             if (response.data['Erreurs']) {
@@ -227,7 +227,7 @@
             ,
             appelEmplacements() {
                 this.emplacements = [];
-                this.$http.get('api/getEmplacementsNonOccupe')
+                this.$http.get('emplacements/getEmplacementsNonOccupe')
                     .then(responseEmpl => {
                         this.emplacements = responseEmpl.data.liste
                     })

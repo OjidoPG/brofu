@@ -48,6 +48,8 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
     export default {
         name: "AdministrateursModale.vue",
         data() {
@@ -76,7 +78,7 @@
                     formData.append("login", this.form.login);
                     formData.append("mdp", this.form.mdp);
 
-                    this.$http.post('api/postAdmins', formData)
+                    this.$http.post('administrateurs/postAdmins', formData)
                         .then(response => {
                             if (response.data['Erreurs']) {
                                 this.erreurs(response.data['Erreurs']['Message']);
@@ -87,7 +89,8 @@
                             }
 
                             if (response.data['Success']) {
-                                sessionStorage.setItem('token', response.data['Success']['JWT']);
+                                axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data['Success']['JWT'];
+                                sessionStorage.setItem('JWT', response.data['Success']['JWT']);
                                 this.$router.push('/Administration');
                             }
                         })

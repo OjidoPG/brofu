@@ -78,11 +78,11 @@ router.beforeEach((to, from, next) => {
         return
     }
 
-    if (sessionStorage.hasOwnProperty('token')) {
+    if (sessionStorage.hasOwnProperty('JWT')) {
         next()
         return
     }
-    router.push({name: '/'});
+    router.push({name: 'Accueil'});
 });
 
 export default router
