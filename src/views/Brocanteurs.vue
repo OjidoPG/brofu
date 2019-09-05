@@ -54,7 +54,7 @@
                                                     required
                                             ></v-select>
                                         </v-col>
-                                        <input hidden v-model="editedItem.id"></input>
+                                        <input hidden v-model="editedItem.id"/>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -155,14 +155,15 @@
 
         methods: {
             initialize() {
-                this.brocanteurs = []
+                this.loadBrocanteurs();
+            },
+            loadBrocanteurs(){
+                this.brocanteurs = [];
                 this.$http.get('clients/getAllClients')
                     .then(response => {
                         this.brocanteurs = response.data.liste
                     })
-
             },
-
             editItem(item) {
                 this.editedIndex = this.brocanteurs.indexOf(item)
                 this.editedItem = Object.assign({}, item)
@@ -195,7 +196,7 @@
 
                 this.$http.post('clients/postClients', formData)
                     .then(response => {
-                        this.messages = []
+                        this.messages = [];
                         if (response.data['Erreurs']) {
                             if (response.data['Erreurs'][0]['Type'] === "Uniqueness") {
                                 this.uniqueness(response.data['Erreurs'][0]['Message'])
@@ -235,7 +236,6 @@
                             this.reussite(response.data['Success'][0]['Message']);
                         }
                     })
-
                 if (this.editedIndex > -1) {
                     Object.assign(this.brocanteurs[this.editedIndex], this.editedItem)
                 } else {
@@ -244,11 +244,11 @@
                 this.close()
             },
             reussite(messageReussite) {
+                this.loadBrocanteurs();
                 this.appelEmplacements();
                 this.$toast(messageReussite, {
                     color: 'success',
                     icon: 'fas fa-check-circle'
-
                 })
                 this.reset()
             },
