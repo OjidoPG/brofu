@@ -7,65 +7,123 @@
                 class="elevation-1"
         >
             <template v-slot:top>
-                <v-toolbar flat color="white">
-                    <v-spacer></v-spacer>
-                    <v-dialog v-model="dialog" max-width="500px">
-                        <template v-slot:activator="{ on }">
-                            <v-btn color="success" dark class="mb-2" v-on="on">Ajouter</v-btn>
-                        </template>
-                        <v-card>
-                            <v-card-text>
-                                <v-container>
-                                    <v-row>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.nom" label="Nom"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.prenom" label="Prénom"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.telephone"
-                                                          label="Téléphone"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.mail" label="E-mail"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.adresse" label="Adresse"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.codepostal"
-                                                          label="Code Postal"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.ville" label="Ville"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="12" md="12" v-if="editedItem.emplacement">
-                                            <v-text-field v-model="editedItem.emplacement" label="Emplacement actuel"
-                                                          disabled></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="12" md="12">
-                                            <v-select
-                                                    v-model="editedItem.emplacements_id"
-                                                    :items="emplacementsListe"
-                                                    item-text="texte"
-                                                    item-value="id"
-                                                    label="Emplacements disponibles"
-                                                    required
-                                            ></v-select>
-                                        </v-col>
-                                        <input hidden v-model="editedItem.id"/>
-                                    </v-row>
-                                </v-container>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="error" @click="close">Annulation</v-btn>
-                                <v-btn color="success" @click="save">Sauvegarder</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </v-toolbar>
+                <v-form
+                        ref="form"
+                        v-model="valid"
+                        lazy-validation
+                >
+                    <v-toolbar flat color="white">
+                        <v-spacer></v-spacer>
+                        <v-dialog v-model="dialog" max-width="500px">
+                            <template v-slot:activator="{ on }">
+                                <v-btn color="success" dark class="mb-2" v-on="on">Ajouter</v-btn>
+                            </template>
+                            <v-card>
+                                <v-card-text>
+
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                        v-model="editedItem.nom"
+                                                        label="Nom"
+                                                        :counter="15"
+                                                        :rules="nameRules"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                        v-model="editedItem.prenom"
+                                                        label="Prénom"
+                                                        :counter="15"
+                                                        :rules="nameRules"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                        v-model="editedItem.telephone"
+                                                        label="Téléphone"
+                                                        :counter="10"
+                                                        :rules="telephoneRules"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                        v-model="editedItem.mail"
+                                                        label="E-mail"
+                                                        :rules="emailRules"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                        v-model="editedItem.adresse"
+                                                        label="Adresse"
+                                                        :counter="30"
+                                                        :rules="adresseRules"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                        v-model="editedItem.codepostal"
+                                                        label="Code Postal"
+                                                        :counter="5"
+                                                        :rules="cpRules"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                        v-model="editedItem.ville"
+                                                        label="Ville"
+                                                        :counter="15"
+                                                        :rules="nameRules"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="12" md="12" v-if="editedItem.emplacement">
+                                                <v-text-field
+                                                        v-model="editedItem.emplacement"
+                                                        label="Emplacement actuel"
+                                                        disabled
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="12" md="12">
+                                                <v-select
+                                                        v-model="editedItem.emplacements_id"
+                                                        :items="emplacementsListe"
+                                                        item-text="texte"
+                                                        item-value="id"
+                                                        label="Emplacements disponibles"
+                                                        required
+                                                ></v-select>
+                                            </v-col>
+                                            <input hidden v-model="editedItem.id"/>
+                                        </v-row>
+                                    </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                            color="error"
+                                            @click="close"
+                                    >Annulation
+                                    </v-btn>
+                                    <v-btn
+                                            color="success"
+                                            @click="save"
+                                            :disabled="!valid"
+                                    >Sauvegarder
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </v-toolbar>
+                </v-form>
             </template>
             <template v-slot:item.action="{ item }">
                 <v-icon
@@ -105,6 +163,31 @@
     export default {
         data: () => ({
             dialog: false,
+            nameRules: [
+                v => !!v || 'Le nom est requis',
+                v => (v && v.length >= 3) || 'Doit faire plus de 3 caractères',
+                v => (v && v.length <= 15) || 'Ne doit pas faire plus de 15 caractères',
+                v => /^[a-zA-Zéèâùï -]+$/.test(v) || 'Le nom doit être valide',
+            ],
+            telephoneRules: [
+                v => !!v || 'Le téléphone est requis',
+                v => (v && v.length == 10) || 'Le numéro doit faire 10 chiffres',
+                v => /^0[1-9][0-9]{8}$/.test(v) || 'Le téléphone doit être valide',
+            ],
+            emailRules: [
+                v => !!v || 'Un e-mail est requis',
+                v => /.+@.+\..+/.test(v) || 'L\'e-mail doit être valide',
+            ],
+            adresseRules: [
+                v => !!v || 'Une adresse est requise',
+                v => (v && v.length >= 10) || 'Doit faire plus de 10 caractères',
+                v => (v && v.length <= 30) || 'Ne doit pas faire plus de 30 caractères '
+            ],
+            cpRules: [
+                v => !!v || 'Le Code Postal est requis',
+                v => (v && v.length == 5) || 'Le Code Postal doit faire 5 chiffres',
+                v => /^[0-9][1-9][0-9]{3}$/.test(v) || 'Le Code Postal doit être valide',
+            ],
             headers: [
                 {text: 'Nom', align: 'left', sortable: true, value: 'nom',},
                 {text: 'Prénom', value: 'prenom'},
@@ -117,7 +200,7 @@
                 {text: 'Actions', value: 'action', sortable: false}
             ],
             brocanteurs: [],
-            messages:[],
+            messages: [],
             editedIndex: -1,
             emplacementsListe: [],
             editedItem: {
@@ -129,7 +212,7 @@
                 codepostal: '',
                 ville: '',
                 emplacement: '',
-                id:''
+                id: ''
             },
             defaultItem: {
                 nom: '',
@@ -140,7 +223,7 @@
                 codepostal: '',
                 ville: '',
                 emplacement: ''
-            },
+            }
         }),
         watch: {
             dialog(val) {
@@ -157,7 +240,7 @@
             initialize() {
                 this.loadBrocanteurs();
             },
-            loadBrocanteurs(){
+            loadBrocanteurs() {
                 this.brocanteurs = [];
                 this.$http.get('clients/getAllClients')
                     .then(response => {
@@ -172,7 +255,7 @@
 
             deleteItem(item) {
                 const index = this.brocanteurs.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.brocanteurs.splice(index, 1)
+                confirm('Etes-vous sur de vouloir supprimer ce brocanteur ?') && this.brocanteurs.splice(index, 1)
             },
 
             close() {
@@ -197,43 +280,11 @@
                 this.$http.post('clients/postClients', formData)
                     .then(response => {
                         this.messages = [];
-                        if (response.data['Erreurs']) {
-                            if (response.data['Erreurs'][0]['Type'] === "Uniqueness") {
-                                this.uniqueness(response.data['Erreurs'][0]['Message'])
-                                this.messages = ''
-                            } else {
-                                this.messages = response.data['Erreurs']
-                                for (let i = 0; this.messages.length; i++) {
-                                    switch (this.messages[i]['Field']) {
-                                        case 'nom':
-                                            this.formError.nomError = true
-                                            break;
-                                        case 'prenom':
-                                            this.formError.prenomError = true
-                                            break;
-                                        case 'telephone':
-                                            this.formError.telephoneError = true
-                                            break;
-                                        case 'mail':
-                                            this.formError.mailError = true
-                                            break;
-                                        case 'adresse':
-                                            this.formError.adresseError = true
-                                            break;
-                                        case 'ville':
-                                            this.formError.villeError = true
-                                            break;
-                                        case 'emplacements_id':
-                                            this.formError.emplacements_idError = true
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }
-                        }
                         if (response.data['Success']) {
                             this.reussite(response.data['Success'][0]['Message']);
+                        }else{
+                            this.messages=[];
+                            this.echec();
                         }
                     })
                 if (this.editedIndex > -1) {
@@ -251,6 +302,12 @@
                     icon: 'fas fa-check-circle'
                 })
                 this.reset()
+            },
+            echec(){
+              this.$toast('Une erreur s\'est produite', {
+                  color: 'error',
+                  icon: 'fas fa-check-circle'
+              })
             },
             appelEmplacements() {
                 this.emplacements = [];
