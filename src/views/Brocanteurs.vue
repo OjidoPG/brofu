@@ -9,7 +9,6 @@
             <template v-slot:top>
                 <v-form
                         ref="form"
-                        v-model="valid"
                         lazy-validation
                 >
                     <v-toolbar flat color="white">
@@ -20,7 +19,6 @@
                             </template>
                             <v-card>
                                 <v-card-text>
-
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="6">
@@ -116,7 +114,6 @@
                                     <v-btn
                                             color="success"
                                             @click="save"
-                                            :disabled="!valid"
                                     >Sauvegarder
                                     </v-btn>
                                 </v-card-actions>
@@ -256,6 +253,19 @@
             deleteItem(item) {
                 const index = this.brocanteurs.indexOf(item)
                 confirm('Etes-vous sur de vouloir supprimer ce brocanteur ?') && this.brocanteurs.splice(index, 1)
+                let formDataDelete = new FormData();
+                formDataDelete.append('idClient', item.id);
+                formDataDelete.append('idEmplacement', item.emplacements_id);
+                this.$http.post('clients/postDeleteClients', formDataDelete)
+                    .then(response => {
+                        this.messages = [];
+                        if (response.data['Success']) {
+                            this.reussite(response.data['Success'][0]['Message']);
+                        } else {
+                            this.messages = [];
+                            this.echec();
+                        }
+                    });
             },
 
             close() {
@@ -282,8 +292,8 @@
                         this.messages = [];
                         if (response.data['Success']) {
                             this.reussite(response.data['Success'][0]['Message']);
-                        }else{
-                            this.messages=[];
+                        } else {
+                            this.messages = [];
                             this.echec();
                         }
                     })
@@ -303,11 +313,11 @@
                 })
                 this.reset()
             },
-            echec(){
-              this.$toast('Une erreur s\'est produite', {
-                  color: 'error',
-                  icon: 'fas fa-check-circle'
-              })
+            echec() {
+                this.$toast('Une erreur s\'est produit', {
+                    color: 'error',
+                    icon: 'fas fa-check-circle'
+                })
             },
             appelEmplacements() {
                 this.emplacements = [];
@@ -322,7 +332,6 @@
             goAdmin() {
                 this.$router.push('/Administration');
             }
-
         }
     }
 </script>
