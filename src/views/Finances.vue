@@ -1,220 +1,194 @@
 <template>
-    <div>
-        <v-data-table
-                :headers="headers"
-                :items="desserts"
-                sort-by="calories"
-                class="elevation-1"
-                dense
-        >
-            <template v-slot:top>
-                <v-toolbar flat color="white">
-                    <v-dialog v-model="dialog" max-width="500px">
-                        <v-card>
-                            <v-card-text>
-                                <v-container>
-                                    <v-row>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.protein"
-                                                          label="Protein (g)"></v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            </v-card-text>
-
-                            <v-card-actions>
-                                <div class="flex-grow-1"></div>
-                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </v-toolbar>
-            </template>
-            <template v-slot:item.action="{ item }">
-                <v-icon
-                        small
-                        class="mr-2"
-                        @click="editItem(item)"
-                >
-                    fas fa-edit
-                </v-icon>
-            </template>
-            <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
-            </template>
-        </v-data-table>
-        <v-btn color="error" class="md-3 offset-md-3 mt-5" @click="goAccueil">ACCUEIL</v-btn>
-        <v-btn color="success" class="md-3 offset-md-4 mt-5" @click="goAdmin">ADMINISTRATION</v-btn>
-    </div>
+  <div>
+    <v-data-table
+      :headers="headers"
+      :items="brocanteurs"
+      sort-by="brocanteurs.nom"
+      class="elevation-1"
+      dense
+      :hide-default-footer="true"
+    >
+      <template v-slot:footer>
+        <v-container>
+          <v-row>
+            <v-col sm="3" md="3">Argent dû</v-col>
+            <v-col sm="3" md="3">0</v-col>
+            <v-col sm="3" md="3">Argent encaissé</v-col>
+            <v-col sm="3" md="3">0</v-col>
+          </v-row>
+        </v-container>
+      </template>
+      <template v-slot:top>
+        <v-form ref="form" lazy-validation>
+          <v-toolbar flat color="white">
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialog" max-width="500px">
+              <v-card>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field v-model="editedItem.nom" label="Nom" disabled></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field v-model="editedItem.prenom" label="Prénom" disabled></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.emplacement.numero"
+                          label="Numéro"
+                          disabled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.emplacement.taille"
+                          label="Taille"
+                          disabled
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field v-model="editedItem.emplacement.prix" label="Prix" disabled></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12" md="12">
+                        <v-radio-group v-model="editedItem.emplacement.paye" label="Payé ?">
+                          <v-radio name="editedItem.emplacement.paye" label="Non" :value="0" key="0"></v-radio>
+                          <v-radio name="editedItem.emplacement.paye" label="Oui" :value="1" key="1"></v-radio>
+                        </v-radio-group>
+                      </v-col>
+                      <input hidden v-model="editedItem.id" />
+                      <input hidden v-model="editedItem.emplacements_id" />
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="error" @click="close">Annulation</v-btn>
+                  <v-btn color="success" @click="save">Sauvegarder</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-toolbar>
+        </v-form>
+      </template>
+      <template v-slot:item.action="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">fas fa-edit</v-icon>
+      </template>
+    </v-data-table>
+    <v-btn color="error" class="md-3 offset-md-3 mt-5" @click="goAccueil">ACCUEIL</v-btn>
+    <v-btn color="success" class="md-3 offset-md-4 mt-5" @click="goAdmin">ADMINISTRATION</v-btn>
+  </div>
 </template>
+
 <script>
-    export default {
-        data: () => ({
-            dialog: false,
-            headers: [
-                {
-                    text: 'Dessert (100g serving)',
-                    align: 'left',
-                    sortable: false,
-                    value: 'name',
-                },
-                {text: 'Calories', value: 'calories'},
-                {text: 'Fat (g)', value: 'fat'},
-                {text: 'Carbs (g)', value: 'carbs'},
-                {text: 'Protein (g)', value: 'protein'},
-                {text: 'Actions', value: 'action', sortable: false},
-            ],
-            desserts: [],
-            editedIndex: -1,
-            editedItem: {
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0,
-            },
-            defaultItem: {
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0,
-            },
-        }),
-
-        computed: {
-            formTitle() {
-                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-            },
-        },
-
-        watch: {
-            dialog(val) {
-                val || this.close()
-            },
-        },
-
-        created() {
-            this.initialize()
-        },
-
-        methods: {
-            initialize() {
-                this.desserts = [
-                    {
-                        name: 'Frozen Yogurt',
-                        calories: 159,
-                        fat: 6.0,
-                        carbs: 24,
-                        protein: 4.0,
-                    },
-                    {
-                        name: 'Ice cream sandwich',
-                        calories: 237,
-                        fat: 9.0,
-                        carbs: 37,
-                        protein: 4.3,
-                    },
-                    {
-                        name: 'Eclair',
-                        calories: 262,
-                        fat: 16.0,
-                        carbs: 23,
-                        protein: 6.0,
-                    },
-                    {
-                        name: 'Cupcake',
-                        calories: 305,
-                        fat: 3.7,
-                        carbs: 67,
-                        protein: 4.3,
-                    },
-                    {
-                        name: 'Gingerbread',
-                        calories: 356,
-                        fat: 16.0,
-                        carbs: 49,
-                        protein: 3.9,
-                    },
-                    {
-                        name: 'Jelly bean',
-                        calories: 375,
-                        fat: 0.0,
-                        carbs: 94,
-                        protein: 0.0,
-                    },
-                    {
-                        name: 'Lollipop',
-                        calories: 392,
-                        fat: 0.2,
-                        carbs: 98,
-                        protein: 0,
-                    },
-                    {
-                        name: 'Honeycomb',
-                        calories: 408,
-                        fat: 3.2,
-                        carbs: 87,
-                        protein: 6.5,
-                    },
-                    {
-                        name: 'Donut',
-                        calories: 452,
-                        fat: 25.0,
-                        carbs: 51,
-                        protein: 4.9,
-                    },
-                    {
-                        name: 'KitKat',
-                        calories: 518,
-                        fat: 26.0,
-                        carbs: 65,
-                        protein: 7,
-                    },
-                ]
-            },
-
-            editItem(item) {
-                this.editedIndex = this.desserts.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
-            },
-
-            close() {
-                this.dialog = false
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                }, 300)
-            },
-
-            save() {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                } else {
-                    this.desserts.push(this.editedItem)
-                }
-                this.close()
-            },
-            goAccueil() {
-                this.$router.push("/");
-            },
-            goAdmin() {
-                this.$router.push("/Administration");
-            }
-        },
+export default {
+  data: () => ({
+    itemStockage: "",
+    dialog: false,
+    headers: [
+      { text: "Nom", align: "left", sortable: true, value: "nom" },
+      { text: "Prénom", value: "prenom" },
+      { text: "Numéro", value: "emplacement.numero" },
+      { text: "Taille", value: "emplacement.taille" },
+      { text: "Prix", value: "emplacement.prix" },
+      { text: "Payé", value: "emplacement.paye" },
+      { text: "Actions", value: "action", sortable: false }
+    ],
+    brocanteurs: [],
+    messages: [],
+    editedIndex: -1,
+    emplacementsListe: [],
+    editedItem: {
+      nom: "",
+      prenom: "",
+      emplacement: [numero => "", taille => "", paye => ""]
+    },
+    defaultItem: {
+      nom: "",
+      prenom: "",
+      emplacement: [numero => "", taille => "", paye => ""]
     }
+  }),
+  watch: {
+    dialog(val) {
+      val || this.close();
+    }
+  },
+
+  created() {
+    this.initialize();
+  },
+
+  methods: {
+    initialize() {
+      this.loadBrocanteurs();
+    },
+    loadBrocanteurs() {
+      this.brocanteurs = [];
+      this.$http.get("clients/getClientsEmplacements").then(response => {
+        this.brocanteurs = response.data.liste;
+      });
+    },
+    editItem(item) {
+      this.editedIndex = this.brocanteurs.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    close() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
+    },
+    save() {
+      let formData = new FormData();
+      formData.append("nom", this.editedItem.nom);
+      formData.append("prenom", this.editedItem.prenom);
+      formData.append("telephone", this.editedItem.telephone);
+      formData.append("mail", this.editedItem.mail);
+      formData.append("adresse", this.editedItem.adresse);
+      formData.append("codepostal", this.editedItem.codepostal);
+      formData.append("ville", this.editedItem.ville);
+      formData.append("emplacements_id", this.editedItem.emplacements_id);
+      formData.append("id", this.editedItem.id);
+
+      this.$http.post("clients/postClients", formData).then(response => {
+        this.messages = [];
+        if (response.data["Success"]) {
+          this.reussite(response.data["Success"][0]["Message"]);
+        } else {
+          this.messages = [];
+          this.echec();
+        }
+      });
+      if (this.editedIndex > -1) {
+        Object.assign(this.brocanteurs[this.editedIndex], this.editedItem);
+      } else {
+        this.brocanteurs.push(this.editedItem);
+      }
+      this.close();
+    },
+    reussite(messageReussite) {
+      this.loadBrocanteurs();
+      this.$toast(messageReussite, {
+        color: "success",
+        icon: "fas fa-check-circle"
+      });
+      this.reset();
+    },
+    echec() {
+      this.$toast("Une erreur s'est produit", {
+        color: "error",
+        icon: "fas fa-check-circle"
+      });
+    },
+    goAccueil() {
+      this.$router.push("/");
+    },
+    goAdmin() {
+      this.$router.push("/Administration");
+    }
+  }
+};
 </script>
