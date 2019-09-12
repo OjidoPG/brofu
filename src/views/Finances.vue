@@ -11,10 +11,18 @@
       <template v-slot:footer>
         <v-container>
           <v-row>
-            <v-col sm="3" md="3"><strong>Argent dû</strong></v-col>
-            <v-col sm="3" md="3" v-bind:style="{color:argentDuColor}"><strong>{{argentDu}} euros</strong></v-col>
-            <v-col sm="3" md="3"><strong>Argent encaissé</strong></v-col>
-            <v-col sm="3" md="3" v-bind:style="{color:argentEncaisseColor}"><strong>{{argentEncaisse}} euros</strong></v-col>
+            <v-col sm="3" md="3">
+              <strong>Argent dû</strong>
+            </v-col>
+            <v-col sm="3" md="3" v-bind:style="{color:argentDuColor}">
+              <strong>{{argentDu}} euros</strong>
+            </v-col>
+            <v-col sm="3" md="3">
+              <strong>Argent encaissé</strong>
+            </v-col>
+            <v-col sm="3" md="3" v-bind:style="{color:argentEncaisseColor}">
+              <strong>{{argentEncaisse}} euros</strong>
+            </v-col>
           </v-row>
         </v-container>
       </template>
@@ -52,8 +60,8 @@
                       </v-col>
                       <v-col cols="12" sm="12" md="12">
                         <v-radio-group v-model="editedItem.emplacement.paye" label="Payé ?">
-                          <v-radio label="Oui" value="1"></v-radio>
-                          <v-radio label="Non" value="0"></v-radio>                          
+                          <v-radio label="Oui" value="oui"></v-radio>
+                          <v-radio label="Non" value="non"></v-radio>
                         </v-radio-group>
                       </v-col>
                       <input hidden v-model="editedItem.id" />
@@ -83,8 +91,8 @@
 <script>
 export default {
   data: () => ({
-    argentDuColor:'red',
-    argentEncaisseColor:'green',
+    argentDuColor: "red",
+    argentEncaisseColor: "green",
     itemStockage: "",
     dialog: false,
     headers: [
@@ -135,6 +143,11 @@ export default {
         let Encaisse = 0;
         this.brocanteurs.forEach(brocanteur => {
           if (brocanteur.emplacement.paye === "0") {
+            brocanteur.emplacement.paye = "non";
+          } else {
+            brocanteur.emplacement.paye = "oui";
+          }
+          if (brocanteur.emplacement.paye === "non") {
             Du += parseInt(brocanteur.emplacement.prix);
           } else {
             Encaisse += parseInt(brocanteur.emplacement.prix);
@@ -143,7 +156,7 @@ export default {
           this.argentEncaisse = Encaisse;
         });
       });
-    },
+    },    
     editItem(item) {
       this.editedIndex = this.brocanteurs.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -157,18 +170,12 @@ export default {
       }, 300);
     },
     save() {
-      let formData = new FormData();
-      formData.append("nom", this.editedItem.nom);
-      formData.append("prenom", this.editedItem.prenom);
-      formData.append("telephone", this.editedItem.telephone);
-      formData.append("mail", this.editedItem.mail);
-      formData.append("adresse", this.editedItem.adresse);
-      formData.append("codepostal", this.editedItem.codepostal);
-      formData.append("ville", this.editedItem.ville);
-      formData.append("emplacements_id", this.editedItem.emplacements_id);
-      formData.append("id", this.editedItem.id);
-
-      this.$http.post("clients/postClients", formData).then(response => {
+      let formDataPaye = new FormData();
+      formDataPaye.append("idEmplacement", this.editedItem.emplacements_id);
+      formDataPaye.append("paye", this.editedItem.emplacement.paye);
+     
+      this.$http.post("emplacements/postPayeEmplacements", formDataPaye)
+      .then(response => {
         this.messages = [];
         if (response.data["Success"]) {
           this.reussite(response.data["Success"][0]["Message"]);
