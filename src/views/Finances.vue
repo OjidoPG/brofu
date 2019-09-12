@@ -5,9 +5,12 @@
       :items="brocanteurs"
       sort-by="brocanteurs.nom"
       class="elevation-1"
-      dense
       :hide-default-footer="true"
+      dense
     >
+      <template v-slot:item.emplacement.paye="{ item }">
+        <v-chip x-small :color="getColor(item.emplacement.paye)" dark>{{ item.emplacement.paye }}</v-chip>
+      </template>
       <template v-slot:footer>
         <v-container>
           <v-row>
@@ -156,7 +159,7 @@ export default {
           this.argentEncaisse = Encaisse;
         });
       });
-    },    
+    },
     editItem(item) {
       this.editedIndex = this.brocanteurs.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -173,23 +176,28 @@ export default {
       let formDataPaye = new FormData();
       formDataPaye.append("idEmplacement", this.editedItem.emplacements_id);
       formDataPaye.append("paye", this.editedItem.emplacement.paye);
-     
-      this.$http.post("emplacements/postPayeEmplacements", formDataPaye)
-      .then(response => {
-        this.messages = [];
-        if (response.data["Success"]) {
-          this.reussite(response.data["Success"][0]["Message"]);
-        } else {
+
+      this.$http
+        .post("emplacements/postPayeEmplacements", formDataPaye)
+        .then(response => {
           this.messages = [];
-          this.echec();
-        }
-      });
+          if (response.data["Success"]) {
+            this.reussite(response.data["Success"][0]["Message"]);
+          } else {
+            this.messages = [];
+            this.echec();
+          }
+        });
       if (this.editedIndex > -1) {
         Object.assign(this.brocanteurs[this.editedIndex], this.editedItem);
       } else {
         this.brocanteurs.push(this.editedItem);
       }
       this.close();
+    },
+    getColor(paye) {
+      if (paye === "oui") return "green";
+      else return "red";
     },
     reussite(messageReussite) {
       this.loadBrocanteurs();
