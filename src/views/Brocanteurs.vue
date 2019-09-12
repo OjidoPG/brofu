@@ -117,9 +117,7 @@
             </template>
         </v-data-table>
         <v-btn color="error" class="md-3 offset-md-3 mt-5" @click="goAccueil">ACCUEIL</v-btn>
-
         <v-btn color="success" class="md-3 offset-md-4 mt-5" @click="goAdmin">ADMINISTRATION</v-btn>
-
         <template>
             <v-row justify="center">
                 <v-dialog v-model="dialog2" persistent max-width="290">
