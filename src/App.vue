@@ -16,7 +16,7 @@
   import BrocanteursLayout from './layouts/BrocanteursLayout'
   import EmplacementsLayout from './layouts/EmplacementsLayout'
   import FinancesLayout from './layouts/FinancesLayout'
-  import AdministrateursLayout from './layouts/AdministrateursLayout'
+  import MailsLayout from './layouts/MailsLayout'
 
   Vue.component('InscriptionLayout', InscriptionLayout)
   Vue.component('AccueilLayout', AccueilLayout)
@@ -24,7 +24,7 @@
   Vue.component('BrocanteursLayout', BrocanteursLayout)
   Vue.component('EmplacementsLayout', EmplacementsLayout)
   Vue.component('FinancesLayout', FinancesLayout)
-  Vue.component('AdministrateursLayout', AdministrateursLayout)
+  Vue.component('MailsLayout', MailsLayout)
 
   export default  {
     computed: {

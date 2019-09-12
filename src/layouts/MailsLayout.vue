@@ -1,7 +1,7 @@
 <template>
     <section>
         <navbar-generale-component
-                title="ADMINISTRATEURS"
+                title="MAILS"
         ></navbar-generale-component>
         <slot/>
     </section>
@@ -11,7 +11,7 @@
     import NavbarGeneraleComponent from '@/components/Layouts/NavbarGeneraleComponent'
 
     export default {
-        name: "AdministrateursLayout.vue",
+        name: "MailsLayout.vue",
         components: {
             NavbarGeneraleComponent
         }

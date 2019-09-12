@@ -60,13 +60,13 @@ const router = new Router({
                 component: () => import(/* webpackChunkName: "about" */ './views/Finances.vue')
             },
             {
-                path: '/Administrateurs',
-                name: 'Administrateurs',
+                path: '/Mails',
+                name: 'Mails',
                 meta: {
-                    layout: 'administrateurs-layout',
+                    layout: 'mails-layout',
                     requiresAuth: true
                 },
-                component: () => import(/* webpackChunkName: "about" */ './views/Administrateurs.vue')
+                component: () => import(/* webpackChunkName: "about" */ './views/Mails.vue')
             }
         ]
     }

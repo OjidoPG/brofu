@@ -26,8 +26,8 @@
             </v-col>
             <v-col cols="3 offset-2">
                 <repartition-bouton
-                        lien="administrateurs"
-                        texte="Gestion des administrateurs"
+                        lien="mails"
+                        texte="Gestion des mails"
                 >
                 </repartition-bouton>
             </v-col>
