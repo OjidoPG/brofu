@@ -11,10 +11,10 @@
       <template v-slot:footer>
         <v-container>
           <v-row>
-            <v-col sm="3" md="3">Argent dû</v-col>
-            <v-col sm="3" md="3">0</v-col>
-            <v-col sm="3" md="3">Argent encaissé</v-col>
-            <v-col sm="3" md="3">0</v-col>
+            <v-col sm="3" md="3"><strong>Argent dû</strong></v-col>
+            <v-col sm="3" md="3" v-bind:style="{color:argentDuColor}"><strong>{{argentDu}} euros</strong></v-col>
+            <v-col sm="3" md="3"><strong>Argent encaissé</strong></v-col>
+            <v-col sm="3" md="3" v-bind:style="{color:argentEncaisseColor}"><strong>{{argentEncaisse}} euros</strong></v-col>
           </v-row>
         </v-container>
       </template>
@@ -52,8 +52,8 @@
                       </v-col>
                       <v-col cols="12" sm="12" md="12">
                         <v-radio-group v-model="editedItem.emplacement.paye" label="Payé ?">
-                          <v-radio name="editedItem.emplacement.paye" label="Non" :value="0" key="0"></v-radio>
-                          <v-radio name="editedItem.emplacement.paye" label="Oui" :value="1" key="1"></v-radio>
+                          <v-radio label="Oui" value="1"></v-radio>
+                          <v-radio label="Non" value="0"></v-radio>                          
                         </v-radio-group>
                       </v-col>
                       <input hidden v-model="editedItem.id" />
@@ -83,6 +83,8 @@
 <script>
 export default {
   data: () => ({
+    argentDuColor:'red',
+    argentEncaisseColor:'green',
     itemStockage: "",
     dialog: false,
     headers: [
@@ -94,6 +96,8 @@ export default {
       { text: "Payé", value: "emplacement.paye" },
       { text: "Actions", value: "action", sortable: false }
     ],
+    argentDu: 0,
+    argentEncaisse: 0,
     brocanteurs: [],
     messages: [],
     editedIndex: -1,
@@ -127,6 +131,17 @@ export default {
       this.brocanteurs = [];
       this.$http.get("clients/getClientsEmplacements").then(response => {
         this.brocanteurs = response.data.liste;
+        let Du = 0;
+        let Encaisse = 0;
+        this.brocanteurs.forEach(brocanteur => {
+          if (brocanteur.emplacement.paye === "0") {
+            Du += parseInt(brocanteur.emplacement.prix);
+          } else {
+            Encaisse += parseInt(brocanteur.emplacement.prix);
+          }
+          this.argentDu = Du;
+          this.argentEncaisse = Encaisse;
+        });
       });
     },
     editItem(item) {
