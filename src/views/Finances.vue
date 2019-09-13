@@ -116,12 +116,12 @@ export default {
     editedItem: {
       nom: "",
       prenom: "",
-      emplacement: [numero => "", taille => "", paye => ""]
+      emplacement: {numero : "", taille : "", paye : ""}
     },
     defaultItem: {
       nom: "",
       prenom: "",
-      emplacement: [numero => "", taille => "", paye => ""]
+      emplacement: {numero : "", taille : "", paye : ""}
     }
   }),
   watch: {

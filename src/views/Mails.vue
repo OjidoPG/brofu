@@ -10,7 +10,6 @@
       class="elevation-1"
       dense
     ></v-data-table>
-
     <v-dialog v-model="dialog" persistent max-width="400px">
       <template v-slot:activator="{ on }">
         <v-btn color="success" class="md-3 offset-md-2 mt-5" @click="goAdmin">ADMINISTRATION</v-btn>
