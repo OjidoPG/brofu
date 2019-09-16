@@ -51,6 +51,7 @@
 <script>
 export default {
   data: () => ({
+    mail:[],
     dialog: false,
     singleSelect: false,
     selected: [],
@@ -103,11 +104,13 @@ export default {
         formData.append("mails", JSON.stringify(mailTab));
         formData.append("message", this.message);
         this.$http.post("mails/envoiMails", formData).then(response => {
+          this.mail = response.data;
           if (response.data["Success"]) {
             this.reussite(response.data["Success"][0]["Message"]);
           } else {
-            this.messages = [];
-            this.echec();
+            this.reussite(response.data["Success"][0]["Message"]);
+            //this.messages = [];
+            //this.echec();
           }
         });
       }
